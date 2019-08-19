@@ -45,7 +45,7 @@ public class ApplictionConfig implements WebMvcConfigurer {
         return stringRedisTemplate;
     }
 
-
+//SAD生巅峰
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(atuchInterceptor()).addPathPatterns("/api/**").excludePathPatterns("/api/login","/api/logout");
