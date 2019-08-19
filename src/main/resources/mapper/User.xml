@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.taru.lanqiao.dao.UserDao">
+
+    <resultMap id="UserMap" type="org.taru.lanqiao.model.user">
+        <id property="userId" column="USER_ID" jdbcType="VARCHAR"/>
+        <result property="userName" column="USER_NAME" jdbcType="VARCHAR"/>
+        <result property="userUserName" column="USER_USER_NAME" jdbcType="VARCHAR"/>
+        <result property="userPassword" column="USER_PASSWORD" jdbcType="VARCHAR"/>
+        <result property="userTelphone" column="USER_TELPHONE" jdbcType="VARCHAR"/>
+        <result property="userAddress" column="USER_ADDRESS" jdbcType="VARCHAR"/>
+        <result property="userComment" column="USER_COMMENT" jdbcType="VARCHAR"/>
+        <collection property="roles" ofType="org.taru.lanqiao.model.role">
+            <id property="roleId" column="ROLE_ID" jdbcType="VARCHAR"/>
+            <result property="roleName" column="ROLE_NAME" jdbcType="VARCHAR"/>
+            <result property="roleComment" column="ROLE_COMMENT" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="PriMap" type="org.taru.lanqiao.model.pri">
+        <id property="priId" column="id" jdbcType="VARCHAR"/>
+        <result property="priName" column="name" jdbcType="VARCHAR"/>
+        <result property="priUrl" column="url" jdbcType="VARCHAR"/>
+
+        <collection property="data" ofType="org.taru.lanqiao.model.pri">
+            <id property="priId" column="PRI_ID" jdbcType="VARCHAR"/>
+            <result property="priName" column="PRI_NAME" jdbcType="VARCHAR"/>
+            <result property="priFatherId" column="PRI_FATHER_ID" jdbcType="VARCHAR"/>
+            <result property="priUrl" column="PRI_URL" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="PriMap1" type="org.taru.lanqiao.model.pri">
+        <id property="priId" column="PRI_ID" jdbcType="VARCHAR"/>
+        <result property="priName" column="PRI_NAME" jdbcType="VARCHAR"/>
+        <result property="priFatherId" column="PRI_FATHER_ID" jdbcType="VARCHAR"/>
+        <result property="priUrl" column="PRI_URL" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+
+    <!-- 用户登录 -->
+    <select id="login" parameterType="org.taru.lanqiao.model.user" resultMap="UserMap">
+        select * from user where user_user_name=#{userUserName} and user_password=#{userPassword} and user_status=1
+    </select>
+
+    <!--根据ID查询菜单 -->
+    <select id="queryMenu" resultMap="PriMap1">
+	select p.* from user as u
+                left join user_role as ur on u.user_id=ur.user_id
+                left join role as r on r.role_id=ur.role_id
+                left join role_pri as rp on r.role_id=rp.role_id
+                left join pri as p on p.pri_id=rp.pri_id
+                where u.user_id=#{userId} and p.pri_father_id='0' and rp.status='1' and ur.status='1' and u.user_status='1' and r.role_status='1' and p.pri_status='1'
+                group by p.pri_name
+  </select>
+
+
+    <!--根据ID和菜单ID查询具体权限 -->
+    <select id="queryPri" resultMap="PriMap1">
+	select p.* from user as u
+                left join user_role as ur on u.user_id=ur.user_id
+                left join role as r on r.role_id=ur.role_id
+                left join role_pri as rp on r.role_id=rp.role_id
+                left join pri as p on p.pri_id=rp.pri_id
+                where u.user_id=#{userId} and p.pri_father_id =#{priFatherId} and rp.status='1' and ur.status='1' and u.user_status='1' and r.role_status='1' and p.pri_status='1'
+                group by p.pri_name
+  </select>
+
+
+    <!--查询全部权限 -->
+    <select id="queryAllPri" resultMap="PriMap1">
+	select p.* from user as u
+                left join user_role as ur on u.user_id=ur.user_id
+                left join role as r on r.role_id=ur.role_id
+                left join role_pri as rp on r.role_id=rp.role_id
+                left join pri as p on p.pri_id=rp.pri_id
+                where u.user_id=#{userId}  and rp.status='1' and ur.status='1' and u.user_status='1' and r.role_status='1' and p.pri_status='1'
+                group by p.pri_name
+  </select>
+
+
+    <!--查询全部用户 -->
+    <select id="queryAllUser" resultMap="UserMap">
+	select u.*,r.* from user u
+	left join user_role ur on u.user_id=ur.user_id
+	left join role r on r.role_id =ur.role_id
+	where u.user_status=1
+  </select>
+
+    <!--删除用户 -->
+    <update id="delete" parameterType="org.taru.lanqiao.model.user">
+    update user set user_status=0 where user_id=#{userId}
+
+</update>
+    <!--修改用户 -->
+    <update id="updateuser" parameterType="org.taru.lanqiao.model.user">
+   update  user set user_name=#{userName} ,user_user_name=#{userUserName} ,user_password=#{userPassword} ,user_telphone=#{userTelphone} ,user_address=#{userAddress} ,user_comment=#{userComment} where user_id=#{userId} and user_status='1'
+
+</update>
+    <!--添加用户 -->
+    <insert id="adduser" parameterType="org.taru.lanqiao.model.user" useGeneratedKeys="true" keyProperty="userId">
+   insert into  user (user_name,user_user_name,user_password,user_telphone,user_address,user_comment) value (#{userName},#{userUserName},#{userPassword},user_telphone=#{userTelphone},#{userAddress},#{userComment})
+
+</insert>
+
+
+<!-- 多条件查询 -->
+    <select id="duotiaojian" resultMap="UserMap" parameterType="org.taru.lanqiao.model.user">
+        <bind name="pattern" value=" '%' + _parameter.userName + '%' "/>
+        <bind name="pattern1" value=" '%' + _parameter.userAddress + '%' "/>
+        select * from user
+        <where>
+            <if test="userName!=null and userName!='' ">
+                and user_name like #{pattern}
+            </if>
+            <if test="userAddress!=null and userAddress!=''" >
+                and user_address like #{pattern1}
+            </if>
+        </where>
+    </select>
+
+    <!-- 添加用户角色 -->
+    <insert  id="AddRole" >
+        	insert into user_role (role_id,user_id) values (#{roleId},#{userId})
+
+    </insert>
+
+    <!-- 删除用户角色 -->
+    <update id="deleterole" >
+       update user_role set status='0' where user_id=#{userId} and role_id=#{roleId}
+    </update>
+
+    <!--批量删除-->
+    <update id="manydelete" >
+        update user set user_status=0 where user_id in
+
+                <foreach item="item" index="inx" collection="array"
+                         open="(" separator="," close=")">
+                        #{item}
+                </foreach>
+
+
+    </update>
+
+
+</mapper>
