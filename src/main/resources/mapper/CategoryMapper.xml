@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lanqiao.taru.library.dao.CategoryDao">
+       <resultMap id="categoryMap" type="org.lanqiao.taru.library.model.Category">
+           <result property="categoryId" column="CATEGORY_ID" jdbcType="VARCHAR"></result>
+           <result property="categoryName" column="CATEGORY_NAME" jdbcType="VARCHAR"></result>
+           <result property="categoryFatherId" column="CATEGORY_FATHER_ID" jdbcType="VARCHAR"></result>
+           <result property="categoryStatus" column="CATEGORY_STATUS" jdbcType="VARCHAR"></result>
+       </resultMap>
+        <select id="selectCategory" resultMap="categoryMap">
+            select * from category where CATEGORY_FATHER_ID = "0"
+        </select>
+        <select id="selectCategorySon" resultMap="categoryMap">
+             select * from category where CATEGORY_FATHER_ID = #{categoryId}
+        </select>
+</mapper>
