@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lanqiao.taru.library.dao.OrderDao">
+
+    <resultMap id="OrderMap" type="org.lanqiao.taru.library.model.Order">
+        <id property="orderId" column="ORDER_ID" jdbcType="VARCHAR"/>
+        <result property="orderUserId" column="ORDER_USER_ID" jdbcType="VARCHAR"/>
+        <result property="orderDateTime" column="ORDER_DATE_TIME" jdbcType="VARCHAR"/>
+        <result property="orderIsSend" column="ORDER_IS_SEND" jdbcType="VARCHAR"/>
+        <result property="orderIsValid" column="ORDER_IS_VALID" jdbcType="VARCHAR"/>
+        <result property="orderTotalPrice" column="ORDER_TOTAL_PRICE" jdbcType="VARCHAR"/>
+        <result property="orderComment" column="ORDER_COMMENT" jdbcType="VARCHAR"/>
+        <result property="orderStatus" column="ORDER_STATUS" jdbcType="VARCHAR"/>
+        <collection property="borrows" ofType="org.lanqiao.taru.library.model.Borrow">
+            <id property="borrowId" column="BORROW_ID" jdbcType="VARCHAR"/>
+            <result property="borrowUserId" column="BORROW_USER_ID" jdbcType="VARCHAR"/>
+            <result property="borrowBookId" column="BORROW_BOOK_ID" jdbcType="VARCHAR"/>
+            <result property="borrowBookNumber" column="BORROW_BOOK_NUMBER" jdbcType="VARCHAR"/>
+            <result property="borrowBookBorrowDate" column="BORROW_BOOK_BORROW_DATE" jdbcType="VARCHAR"/>
+            <result property="borrowBookReturnDate" column="BORROW_BOOK_RETURN_DATE" jdbcType="VARCHAR"/>
+            <result property="borrowBookTotalPrice" column="BORROW_BOOK_TOTAL_PRICE" jdbcType="VARCHAR"/>
+            <result property="borrowBookIsReturn" column="BORROW_BOOK_IS_RETURN" jdbcType="VARCHAR"/>
+            <result property="borrowOrderId" column="BORROW_ORDER_ID" jdbcType="VARCHAR"/>
+            <result property="borrowStatus" column="BORROW_STATUS" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <insert id="add">
+      INSERT INTO orders
+( ORDER_ID, ORDER_USER_ID, ORDER_DATE_TIME, ORDER_IS_SEND, ORDER_IS_VALID, ORDER_TOTAL_PRICE, ORDER_COMMENT, ORDER_STATUS )
+VALUES
+   (#{orderId},#{orderUserId},now(),#{orderIsSend},#{orderIsValid},#{orderTotalPrice},#{orderComment},#{orderStatus})
+    </insert>
+
+
+
+    <select id="query" parameterType="org.lanqiao.taru.library.model.Order" resultMap="OrderMap">
+
+	select * from orders where order_user_id=#{orderUserId}
+    </select>
+
+
+</mapper>

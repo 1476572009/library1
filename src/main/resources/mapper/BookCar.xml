@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lanqiao.taru.library.dao.BookcarDao">
+
+<!--    <resultMap id="BorrowMap" type="org.lanqiao.taru.library.model.Borrow">-->
+<!--        <id property="borrowId" column="BORROW_ID" jdbcType="VARCHAR"/>-->
+<!--        <result property="borrowUserId" column="BORROW_USER_ID" jdbcType="VARCHAR"/>-->
+<!--        <result property="borrowBookId" column="BORROW_BOOK_ID" jdbcType="VARCHAR"/>-->
+<!--        <result property="borrowBookNumber" column="BORROW_BOOK_NUMBER" jdbcType="VARCHAR"/>-->
+<!--        <result property="borrowBookBorrowDate" column="BORROW_BOOK_BORROW_DATE" jdbcType="VARCHAR"/>-->
+<!--        <result property="borrowBookReturnDate" column="BORROW_BOOK_RETURN_DATE" jdbcType="VARCHAR"/>-->
+<!--        <result property="borrowBookTotalPrice" column="BORROW_BOOK_TOTAL_PRICE" jdbcType="VARCHAR"/>-->
+<!--        <result property="borrowBookIsReturn" column="BORROW_BOOK_IS_RETURN" jdbcType="VARCHAR"/>-->
+<!--        <result property="borrowOrderId" column="BORROW_ORDER_ID" jdbcType="VARCHAR"/>-->
+<!--        <result property="borrowStatus" column="BORROW_STATUS" jdbcType="VARCHAR"/>-->
+<!--        <association property="book" javaType="org.lanqiao.taru.library.model.Borrow">-->
+<!--            <id property="bookId" column="BOOK_ID" jdbcType="VARCHAR"></id>-->
+<!--            <result property="bookCode" column="BOOK_CODE" jdbcType="VARCHAR" ></result>-->
+<!--            <result property="bookName" column="BOOK_NAME" jdbcType="VARCHAR"></result>-->
+<!--            <result property="bookAuthor" column="BOOK_AUTHOR" jdbcType="VARCHAR"></result>-->
+<!--            <result property="bookCategoryId" column="BOOK_CATEGORY_ID" jdbcType="VARCHAR"></result>-->
+<!--            <result property="bookPublishTime" column="BOOK_PUBLISH_TIME" jdbcType="VARCHAR"></result>-->
+<!--            <result property="bookPrice" column="BOOK_PRICE" jdbcType="VARCHAR"></result>-->
+<!--            <result property="bookStockSize" column="BOOK_STOCK_SIZE" jdbcType="VARCHAR"></result>-->
+<!--            <result property="bookComment" column="BOOK_COMMENT" jdbcType="VARCHAR"></result>-->
+<!--            <result property="bookStatus" column="BOOK_STATUS" jdbcType="TINYINT"></result>-->
+<!--        </association>-->
+<!--    </resultMap>-->
+
+<!--         INSERT INTO borrow ( BORROW_ID, BORROW_USER_ID, BORROW_BOOK_ID, BORROW_BOOK_NUMBER, BORROW_BOOK_BORROW_DATE, BORROW_BOOK_RETURN_DATE, BORROW_BOOK_TOTAL_PRICE, BORROW_BOOK_IS_RETURN, BORROW_ORDER_ID, BORROW_STATUS )-->
+<!--            VALUES ( #{borrowId}, #{borrowUserId}, #{borrowBookId}, #{borrowBookNumber}, #{borrowBookBorrowData},#{borrowBookReturnData}, #{borrowBookTotalPrice}, #{borrowBookIsReturn}, #{borrowOrderId},1)-->
+    <resultMap id="BookcarMap" type="org.lanqiao.taru.library.model.Bookcar">
+        <id property="bookcarId" column="BOOKCAR_ID" jdbcType="VARCHAR"/>
+        <result property="bookcarBookId" column="BOOKCAR_BOOK_ID" jdbcType="VARCHAR"/>
+        <result property="bookcarUserId" column="BOOKCAR_USER_ID" jdbcType="VARCHAR"/>
+        <result property="bookcarStatus" column="BOOKCAR_STATUS" jdbcType="VARCHAR"/>
+        <association property="book" javaType="org.lanqiao.taru.library.model.Book">
+            <id property="bookId" column="BOOK_ID" jdbcType="VARCHAR"></id>
+            <result property="bookCode" column="BOOK_CODE" jdbcType="VARCHAR" ></result>
+            <result property="bookName" column="BOOK_NAME" jdbcType="VARCHAR"></result>
+            <result property="bookAuthor" column="BOOK_AUTHOR" jdbcType="VARCHAR"></result>
+            <result property="bookCategoryId" column="BOOK_CATEGORY_ID" jdbcType="VARCHAR"></result>
+            <result property="bookPublishTime" column="BOOK_PUBLISH_TIME" jdbcType="VARCHAR"></result>
+            <result property="bookPrice" column="BOOK_PRICE" jdbcType="VARCHAR"></result>
+            <result property="bookStockSize" column="BOOK_STOCK_SIZE" jdbcType="VARCHAR"></result>
+            <result property="bookComment" column="BOOK_COMMENT" jdbcType="VARCHAR"></result>
+            <result property="bookStatus" column="BOOK_STATUS" jdbcType="TINYINT"></result>
+        </association>
+    </resultMap>
+
+    <insert id="insertBookcar" parameterType="org.lanqiao.taru.library.model.Bookcar" >
+        INSERT INTO bookcar ( BOOKCAR_ID, BOOKCAR_BOOK_ID, BOOKCAR_USER_ID, BOOKCAR_BORROW_Time,BOOKCAR_STATUS )
+        VALUES (#{bookcarId} , #{bookcarBookId}, #{bookcarUserId}, #{bookcarBorrowTime}, #{bookcarStatus} )
+    </insert>
+
+    <update id="delBookcars" >
+        update bookcar set BOOKCAR_STATUS=0 where BOOKCAR_ID in
+
+        <foreach item="item" index="inx" collection="array"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+
+
+    </update>
+    
+    <update id="update">
+        update bookcar set bookcar_borrow_time=#{bookcarBorrowTime} where bookcar_id=#{bookcarId}
+    </update>
+    
+    <select id="Bookcarlist" parameterType="org.lanqiao.taru.library.model.Bookcar" resultMap="BookcarMap">
+        select bc.*,b.* from bookcar bc left join books b on bc.bookcar_book_id=b.book_id where bc.BOOKCAR_USER_ID=#{bookcarUserId}
+    </select>
+
+
+</mapper>
