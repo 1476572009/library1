@@ -31,7 +31,7 @@
       INSERT INTO orders
 ( ORDER_ID, ORDER_USER_ID, ORDER_DATE_TIME, ORDER_IS_SEND, ORDER_IS_VALID, ORDER_TOTAL_PRICE, ORDER_COMMENT, ORDER_STATUS )
 VALUES
-   (#{orderId},#{orderUserId},now(),#{orderIsSend},#{orderIsValid},#{orderTotalPrice},#{orderComment},#{orderStatus})
+   (#{orderId},#{orderUserId},now(),"0","0",#{orderTotalPrice},#{orderComment},"1")
     </insert>
 
 
@@ -41,5 +41,7 @@ VALUES
 	select * from orders where order_user_id=#{orderUserId}
     </select>
 
-
+    <update id="update">
+        update orders set ORDER_IS_VALID=1 where ORDER_ID=#{orderId}
+    </update>
 </mapper>

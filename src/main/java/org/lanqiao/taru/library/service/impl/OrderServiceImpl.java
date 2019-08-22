@@ -15,10 +15,13 @@ public class OrderServiceImpl implements OrderService {
     OrderDao od;
 
     public int add(Order order) {
-        order.setOrderId(IdUtil.getDateId());
+
         return od.add(order);
     }
     public List query(Order order){
         return od.query(order);
+    }
+    public int update(Order order){
+        return od.update(order);
     }
 }
