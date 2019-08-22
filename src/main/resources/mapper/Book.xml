@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.taru.lanqiao.dao.UserDao">
+<mapper namespace="import org.lanqiao.taru.library.dao.BookDao">
 
     <!--// 查询图书列表-->
     <!--public List<Book> queryList();-->
@@ -67,6 +67,10 @@
     <!--*/-->
     <!--public ArticleVo review(@Param("articleBookId") String articleBookId,@Param("articleId") String articleId );-->
 
+    <resultMap id="reviewMap" type="org.lanqiao.taru.library.vo.ArticleVo">
+
+    </resultMap>
+    <select id="review" resultMap="reviewMap"></select>
 
 
 </mapper>
