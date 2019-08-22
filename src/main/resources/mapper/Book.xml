@@ -44,11 +44,18 @@
 
     <!--//  查询榜单-->
     <!--public List queryBytop();-->
-    <resultMap id="queryTopMap" type="org.lanqiao.taru.library.vo.ArticleVo">
-
-    </resultMap>
-    <select id="queryBytop" resultMap="queryTopMap">
-
+    <!--<resultMap id="queryTopMap" type="org.lanqiao.taru.library.vo.TopVo">-->
+        <!--<result property="count" column="" jdbcType=""></result>-->
+        <!--<result property="bookId" column="" jdbcType=""></result>-->
+        <!--<result property="" column="" jdbcType=""></result>-->
+     <!--</resultMap>-->
+    <select id="queryBytop" resultType="org.lanqiao.taru.library.vo.TopVo">
+        select b.BOOK_NAME booksName,c2.bookId,c2.count
+          from books b left join
+            (select count(*) count ,c.COLLECT_BOOK_ID bookId
+                from collect c group by c.COLLECT_BOOK_ID
+                ORDER BY count DESC)
+          c2 on b.BOOK_ID=c2.bookId LIMIT 0,10
     </select>
     <!--/**-->
     <!--* 查询图书详情-->
@@ -68,9 +75,15 @@
     <!--public ArticleVo review(@Param("articleBookId") String articleBookId,@Param("articleId") String articleId );-->
 
     <resultMap id="reviewMap" type="org.lanqiao.taru.library.vo.ArticleVo">
-
+        <id property="articleId" column="ARTICLEID" jdbcType="VARCHAR"></id>
+        <id property="articleTitle" column="ARTICLE_TITLE" jdbcType="VARCHAR"></id>
+        <result property="articleBody" column="ARTICLE_BODY" jdbcType="VARCHAR" ></result>
+        <result property="articleNum" column="ARTICLENUM" jdbcType="VARCHAR"></result>
+        <result property="articleBookId" column="ARTICLE_BOOK_ID" jdbcType="VARCHAR"></result>
     </resultMap>
-    <select id="review" resultMap="reviewMap"></select>
+    <select id="review" resultMap="reviewMap">
+       select *  from article where ARTICLE_BOOK_ID =#{articleBookId} and ARTICLEID=#{articleId}
+    </select>
 
 
 </mapper>

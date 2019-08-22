@@ -11,30 +11,31 @@ import java.util.List;
 
 @Service
 public class BookServiceImpl implements BookService {
+
     @Autowired
-    BookDao bookDaoImol;
+    BookDao bookDaoImpl;
     @Override
     public List<Book> queryList() {
-        return bookDaoImol.queryList();
+        return bookDaoImpl.queryList();
     }
 
     @Override
     public List<Book> queryByterm(String bookName, String bookAuthor) {
-        return bookDaoImol.queryByterm(bookName,bookAuthor);
+        return bookDaoImpl.queryByterm(bookName,bookAuthor);
     }
 
     @Override
     public List queryBytop() {
-        return bookDaoImol.queryBytop();
+        return bookDaoImpl.queryBytop();
     }
 
     @Override
     public Book queryDetail(String bookId) {
-        return bookDaoImol.queryDetail(bookId);
+        return bookDaoImpl.queryDetail(bookId);
     }
 
     @Override
     public ArticleVo review(String articleBookId, String articleId) {
-        return bookDaoImol.review(articleBookId, articleId);
+        return bookDaoImpl.review(articleBookId, articleId);
     }
 }
