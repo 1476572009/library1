@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.taru.lanqiao.dao.UserDao">
+
+    <!--// 查询图书列表-->
+    <!--public List<Book> queryList();-->
+    <resultMap id="query" type="org.lanqiao.taru.library.model.Book">
+        <id property="bookId" column="BOOK_ID" jdbcType="VARCHAR"></id>
+        <result property="bookCode" column="BOOK_CODE" jdbcType="VARCHAR" ></result>
+        <result property="bookName" column="BOOK_NAME" jdbcType="VARCHAR"></result>
+        <result property="bookAuthor" column="BOOK_AUTHOR" jdbcType="VARCHAR"></result>
+        <result property="bookCategoryId" column="BOOK_CATEGORY_ID" jdbcType="VARCHAR"></result>
+        <result property="bookPublishTime" column="BOOK_PUBLISH_TIME" jdbcType="VARCHAR"></result>
+        <result property="bookPrice" column="BOOK_PRICE" jdbcType="VARCHAR"></result>
+        <result property="bookStockSize" column="BOOK_STOCK_SIZE" jdbcType="VARCHAR"></result>
+        <result property="bookComment" column="BOOK_COMMENT" jdbcType="VARCHAR"></result>
+        <result property="bookStatus" column="BOOK_STATUS" jdbcType="TINYINT"></result>
+    </resultMap>
+    <select id="queryList" resultMap="query">
+        select * from books
+    </select>
+
+    <!--/**-->
+    <!--* 多条件查询-->
+    <!--* @param bookName 根据书名-->
+    <!--* @param bookAuthor 根据作者名-->
+    <!--*二者随意组合 可空-->
+    <!--* @return-->
+    <!--*/-->
+    <!--public List<Book> queryByterm(@Param("bookName") String bookName, @Param("bookAuthor") String bookAuthor);-->
+    <select id="queryByterm" resultMap="query">
+        select * from books
+        <where>
+            <if test="bookName!=null  and booName!=' '">
+                and book_name like #{bookName}
+            </if>
+            <if test="bookAuthor!=null  and bookAuthor!=' '">
+                and BOOK_AUTHOR like #{bookName}
+            </if>
+        </where>
+    </select>
+
+    <!--//  查询榜单-->
+    <!--public List queryBytop();-->
+    <resultMap id="queryTopMap" type="org.lanqiao.taru.library.vo.ArticleVo">
+
+    </resultMap>
+    <select id="queryBytop" resultMap="queryTopMap">
+
+    </select>
+    <!--/**-->
+    <!--* 查询图书详情-->
+    <!--* @param bookId 根据图书id查询图书信息-->
+    <!--* @return-->
+    <!--*/-->
+    <!--public Book queryDetail(String bookId);-->
+    <select id="queryDetail" resultMap="query">
+        select * from books where book_id=#{bookId}
+    </select>
+    <!--/**-->
+    <!--* 图书预览-->
+    <!--* @param articleBookId-->
+    <!--* @param articleId-->
+    <!--* @return-->
+    <!--*/-->
+    <!--public ArticleVo review(@Param("articleBookId") String articleBookId,@Param("articleId") String articleId );-->
+
+
+
+</mapper>
