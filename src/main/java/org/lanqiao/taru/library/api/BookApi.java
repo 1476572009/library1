@@ -130,4 +130,24 @@ public class BookApi {
         }
         return jsonResult;
     }
+
+
+    @RequestMapping("/api/book/selectBooksLike")
+    @ResponseBody
+    public JsonResult selectBooksLike(String bookName){
+        JsonResult jsonResult;
+        try{
+            List<Book> list= bookService.selectBooksLike(bookName);
+//
+            if(list!=null){
+                jsonResult=new JsonResult("200","预览成功",list);
+            }else{
+                jsonResult=new JsonResult("404","预览失败，此书籍或章节不存在",null);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            jsonResult=new JsonResult("500","预览异常",e.getMessage());
+        }
+        return jsonResult;
+    }
 }
