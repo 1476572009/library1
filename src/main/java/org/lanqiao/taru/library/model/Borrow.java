@@ -10,6 +10,8 @@ public class Borrow {
     private String borrowBookTotalPrice;
     private String borrowBookIsReturn;
     private String borrowOrderId;
+    private String borrowRemaintime;
+    private String borrowTime;
     private String borrowStatus;
     private Book book;
 
@@ -91,6 +93,22 @@ public class Borrow {
 
     public void setBorrowStatus(String borrowStatus) {
         this.borrowStatus = borrowStatus;
+    }
+
+    public String getBorrowRemaintime() {
+        return borrowRemaintime;
+    }
+
+    public void setBorrowRemaintime(String borrowRemaintime) {
+        this.borrowRemaintime = borrowRemaintime;
+    }
+
+    public String getBorrowTime() {
+        return borrowTime;
+    }
+
+    public void setBorrowTime(String borrowTime) {
+        this.borrowTime = borrowTime;
     }
 
     public Book getBook() {
