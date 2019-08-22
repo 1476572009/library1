@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="import org.lanqiao.taru.library.dao.BookDao">
+<mapper namespace="org.lanqiao.taru.library.dao.BookDao">
 
     <!--// 查询图书列表-->
     <!--public List<Book> queryList();-->
