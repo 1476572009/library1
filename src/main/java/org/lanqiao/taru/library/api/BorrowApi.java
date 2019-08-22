@@ -1,10 +1,12 @@
 package org.lanqiao.taru.library.api;
 
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.lanqiao.taru.library.model.Order;
-import org.lanqiao.taru.library.service.OrderService;
+import org.lanqiao.taru.library.model.Borrow;
+import org.lanqiao.taru.library.service.BorrowService;
 import org.lanqiao.taru.library.vo.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,21 +17,20 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
-@Api(description = "订单接口")
 @RestController
 @CrossOrigin
-@RequestMapping("/api/order")
-public class OrderApi {
-
+@RequestMapping("/api/borrow")
+@Api(description = "订单详情接口")
+public class BorrowApi {
     @Autowired
-    OrderService os;
+    BorrowService bs;
     JsonResult result=null;
 
     @ApiIgnore
-    @RequestMapping("/add")
-    public JsonResult add(Order order){
+    @RequestMapping("/insert")
+    public JsonResult insert(Borrow borrow){
         try {
-            int i=os.add(order);
+            int i=bs.insert(borrow);
 
             if (i>0){
                 result=new JsonResult("200","插入成功",i);
@@ -45,11 +46,11 @@ public class OrderApi {
     }
 
     @ApiOperation(value="查询订单详情")
-    @ApiImplicitParam(name = "orderUserId", value = "用户ID",paramType = "query",dataType = "String", required = true)
+    @ApiImplicitParam(name = "borrowOrderId", value = "订单ID",paramType = "query",dataType = "String", required = true)
     @RequestMapping(value = "/query",method = RequestMethod.GET)
-    public JsonResult query(Order order){
+    public JsonResult query(Borrow borrow){
         try {
-            List list=os.query(order);
+            List list=bs.query(borrow);
 
             if (list.size()>0){
                 result=new JsonResult("200","查询成功",list);
@@ -63,4 +64,9 @@ public class OrderApi {
         }
         return result;
     }
+
+
+
+
+
 }

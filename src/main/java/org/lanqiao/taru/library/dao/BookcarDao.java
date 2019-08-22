@@ -11,4 +11,5 @@ public interface BookcarDao {
     public int delBookcars(String[] bookcars);
     public int update(Bookcar bookcar);
     public List Bookcarlist(Bookcar bookcar);
+    public Bookcar queryBookcar(String bookcarId);
 }

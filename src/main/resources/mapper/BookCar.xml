@@ -35,6 +35,7 @@
         <id property="bookcarId" column="BOOKCAR_ID" jdbcType="VARCHAR"/>
         <result property="bookcarBookId" column="BOOKCAR_BOOK_ID" jdbcType="VARCHAR"/>
         <result property="bookcarUserId" column="BOOKCAR_USER_ID" jdbcType="VARCHAR"/>
+        <result property="bookcarBorrowTime" column="BOOKCAR_BORROW_TIME" jdbcType="VARCHAR"/>
         <result property="bookcarStatus" column="BOOKCAR_STATUS" jdbcType="VARCHAR"/>
         <association property="book" javaType="org.lanqiao.taru.library.model.Book">
             <id property="bookId" column="BOOK_ID" jdbcType="VARCHAR"></id>
@@ -52,7 +53,7 @@
 
     <insert id="insertBookcar" parameterType="org.lanqiao.taru.library.model.Bookcar" >
         INSERT INTO bookcar ( BOOKCAR_ID, BOOKCAR_BOOK_ID, BOOKCAR_USER_ID, BOOKCAR_BORROW_Time,BOOKCAR_STATUS )
-        VALUES (#{bookcarId} , #{bookcarBookId}, #{bookcarUserId}, #{bookcarBorrowTime}, #{bookcarStatus} )
+        VALUES (#{bookcarId} , #{bookcarBookId}, #{bookcarUserId}, #{bookcarBorrowTime}, 1 )
     </insert>
 
     <update id="delBookcars" >
@@ -74,5 +75,8 @@
         select bc.*,b.* from bookcar bc left join books b on bc.bookcar_book_id=b.book_id where bc.BOOKCAR_USER_ID=#{bookcarUserId}
     </select>
 
+    <select id="queryBookcar" resultType="org.lanqiao.taru.library.model.Bookcar"  >
+        select BOOKCAR_ID as bookcarId,BOOKCAR_BOOK_ID as bookcarBookId , BOOKCAR_USER_ID as bookcarUserId,BOOKCAR_BORROW_TIME as bookcarBorrowTime,BOOKCAR_STATUS as bookcarStatus from bookcar  where BOOKCAR_ID=#{bookcarId}
+    </select>
 
 </mapper>
