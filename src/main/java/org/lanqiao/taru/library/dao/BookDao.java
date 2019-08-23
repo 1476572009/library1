@@ -38,4 +38,6 @@ public interface BookDao {
      */
     public ArticleVo review(@Param("articleBookId") String articleBookId,@Param("articleId") String articleId );
 
+//    模糊查询
+    public List<Book> selectBooksLike(String bookName);
 }

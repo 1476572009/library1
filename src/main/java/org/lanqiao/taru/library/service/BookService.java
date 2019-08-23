@@ -24,4 +24,7 @@ public interface BookService {
      * @return
      */
     public ArticleVo review(String articleBookId, String articleId ) ;
+
+    //    模糊查询
+    public List<Book> selectBooksLike(String bookName);
 }

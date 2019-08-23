@@ -38,4 +38,9 @@ public class BookServiceImpl implements BookService {
     public ArticleVo review(String articleBookId, String articleId) {
         return bookDaoImpl.review(articleBookId, articleId);
     }
+
+    @Override
+    public List<Book> selectBooksLike(String bookName) {
+        return bookDaoImpl.selectBooksLike(bookName);
+    }
 }

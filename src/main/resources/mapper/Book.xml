@@ -33,22 +33,17 @@
     <select id="queryByterm" resultMap="query">
         select * from books
         <where>
-            <if test="bookName!=null  and booName!=' '">
+            <if test="bookName!=null  and bookName!=''">
                 and book_name like #{bookName}
             </if>
             <if test="bookAuthor!=null  and bookAuthor!=' '">
-                and BOOK_AUTHOR like #{bookName}
+                and BOOK_AUTHOR like #{bookAuthor}
             </if>
         </where>
     </select>
 
     <!--//  查询榜单-->
-    <!--public List queryBytop();-->
-    <!--<resultMap id="queryTopMap" type="org.lanqiao.taru.library.vo.TopVo">-->
-        <!--<result property="count" column="" jdbcType=""></result>-->
-        <!--<result property="bookId" column="" jdbcType=""></result>-->
-        <!--<result property="" column="" jdbcType=""></result>-->
-     <!--</resultMap>-->
+
     <select id="queryBytop" resultType="org.lanqiao.taru.library.vo.TopVo">
         select b.BOOK_NAME booksName,c2.bookId,c2.count
           from books b left join
@@ -72,8 +67,6 @@
     <!--* @param articleId-->
     <!--* @return-->
     <!--*/-->
-    <!--public ArticleVo review(@Param("articleBookId") String articleBookId,@Param("articleId") String articleId );-->
-
     <resultMap id="reviewMap" type="org.lanqiao.taru.library.vo.ArticleVo">
         <id property="articleId" column="ARTICLEID" jdbcType="VARCHAR"></id>
         <id property="articleTitle" column="ARTICLE_TITLE" jdbcType="VARCHAR"></id>
@@ -85,5 +78,10 @@
        select *  from article where ARTICLE_BOOK_ID =#{articleBookId} and ARTICLEID=#{articleId}
     </select>
 
-
+<!--模糊查询-->
+    <select id="selectBooksLike" resultMap="query">
+        <bind name="bookName" value="'%' + _parameter+ '%'" />
+        SELECT * FROM books
+        WHERE book_name LIKE #{bookName}
+    </select>
 </mapper>
