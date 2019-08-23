@@ -2,11 +2,104 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.taru.lanqiao.dao.UserDao">
+<mapper namespace="org.lanqiao.taru.library.dao.UserDao">
 
+    <resultMap id="UserMap" type="org.lanqiao.taru.library.model.User">
+            <id property="userId" column="USER_ID" jdbcType="VARCHAR"/>
+        <result property="userName" column="USER_NAME" jdbcType="VARCHAR"/>
+        <result property="userPassword" column="USER_PASSWORD" jdbcType="VARCHAR"/>
+        <result property="userTelphone" column="USER_TELEPHONE" jdbcType="VARCHAR"/>
+        <result property="userAddress" column="USER_ADDRESS" jdbcType="VARCHAR"/>
+        <result property="userIcon" column="USER_ICON" jdbcType="VARCHAR"/>
+        <result property="userStatus" column="USER_STATUS" jdbcType="VARCHAR"/>
+        <result property="userEmail" column="USER_EMAIL" jdbcType="VARCHAR"/>
+        <result property="userGrade" column="USER_GRADE" jdbcType="VARCHAR"/>
 
+         </resultMap>
 
+    <!-- 用户登录 -->
+    <select id="LLogin" parameterType="org.lanqiao.taru.library.model.User" resultMap="UserMap">
+        select * from user where user_telephone=#{tele} and user_password=#{password}
+    </select>
+<select id="selectAll" parameterType="hashMap" resultMap="UserMap">
+    select * from user where user_id=#{id}
+</select>
+    <update id="updateOne" >
+        UPDATE user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="username!=null">user_name=#{username},</if>
+            <if test="password!=null">user_password=#{password},</if>
+            <if test="icon!=null">user_icon=#{icon},</if>
+            <if test="address!=null">user_address=#{address},</if>
+            <if test="email!=null">user_email=#{email},</if>
+            <if test="telephone!=null">user_telephone=#{telephone},</if>
+            <if test="grade!=null">user_grade=#{grade},</if>
+            <if test="status!=null">user_status=#{status},</if>
+        </trim>
+        WHERE  user_id=#{id}
+    </update>
+    <update id="updategrade">
+        update user set user_grade=user_grade+'1' where USER_ID = #{id}
+    </update>
 
+    <resultMap id="CollectMap" type="org.lanqiao.taru.library.model.Book">
+        <result property="bookName" column="BOOK_NAME" jdbcType="VARCHAR"/>
+        <result property="bookAuthor" column="BOOK_AUTHOR" jdbcType="VARCHAR"/>
+        <result property="bookPrice" column="BOOK_PRICE" jdbcType="VARCHAR"/>
+        <result property="bookPublishTime" column="BOOK_PUBLISH_TIME" jdbcType="VARCHAR"/>
+        <result property="bookStockSize" column="BOOK_STOCK_SIZE" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="queryal" resultMap="CollectMap">
+SELECT
+	books.BOOK_NAME,
+	books.BOOK_AUTHOR,
+	books.BOOK_PRICE,
+	books.BOOK_PUBLISH_TIME,
+	books.BOOK_STOCK_SIZE
 
+FROM
+	 collect
+	LEFT JOIN books ON books.BOOK_ID = collect.COLLECT_BOOK_ID
+WHERE
+	collect.COLLECT_USER_ID = #{uid}
+    </select>
+    <insert id="insertCol" >
+        insert into collect values (#{collectid},#{uid},#{bookid},#{time},#{status})
+    </insert>
+    <resultMap id="LogMap" type="org.lanqiao.taru.library.model.Log">
+        <result property="logStartTime" column="LOG_START_TIME" jdbcType="VARCHAR"></result>
+        <result property="logStatus" column="LOG_STATUS" jdbcType="VARCHAR"></result>
+        <association property="book" javaType="org.lanqiao.taru.library.model.Book">
+            <result property="bookName" column="BOOK_NAME" jdbcType="VARCHAR"></result>
+            <result property="bookAuthor" column="BOOK_AUTHOR" jdbcType="VARCHAR"></result>
+            <result property="bookComment" column="BOOK_COMMENT" jdbcType="VARCHAR"></result>
+        </association>
+    </resultMap>
+    <select id="selectog" resultMap="LogMap">
+      SELECT
+	log.LOG_START_TIME,
+	log.LOG_STATUS,
+	BOOK_NAME,
+	BOOK_AUTHOR,
+	BOOK_COMMENT
+FROM
+	log
+	LEFT JOIN books ON log.LOG_BOOK_ID = books.BOOK_ID
+WHERE
+	LOG_USER_ID = #{id}
+    </select>
 
+    <insert id="insertLog">
+        insert into log values (#{logid},#{uid},#{bookid},#{startime},#{status})
+    </insert>
+<resultMap id="ReturnMap" type="org.lanqiao.taru.library.model.User">
+    <result property="userName" column="USER_NAME"></result>
+    <result property="userPassword" column="USER_PASSWORD"></result>
+</resultMap>
+    <select id="forgetdeal" resultMap="ReturnMap">
+        SELECT USER_PASSWORD ,USER_NAME from `user` WHERE USER_ID = #{id} and user_question = #{question} and user_questions = #{questions}
+    </select>
+    <insert id="userRegister">
+        insert into user values(#{id},#{username},#{password},#{icon},#{address},#{email},#{telephone},#{grade},#{status},#{question},#{questions})
+    </insert>
 </mapper>
