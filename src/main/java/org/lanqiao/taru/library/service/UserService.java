@@ -17,4 +17,6 @@ public interface UserService {
     public  int insertLog(String logid, String uid, String bookid, String startime, String status);
     public User selpassword(String id, String question, String questions);
     public int userRegiste(String id, String username, String password, String icon, String address, String email, String telephone, String grade, String status, String question, String questions);
+    //查询用户详情根据用户Id
+    public User queryByUserId(String userId);
 }

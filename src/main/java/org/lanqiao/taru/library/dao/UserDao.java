@@ -19,4 +19,6 @@ public interface UserDao {
     public  int insertLog(String logid, String uid, String bookid, String startime, String status);
     public User forgetdeal(String id, String question, String questions);
     public int userRegister(String id, String username, String password, String icon, String address, String email, String telephone, String grade, String status, String question, String questions);
+    //根据用户Id查询用户详情
+    public User queryUserByuserId(String userId);
 }
