@@ -2,6 +2,7 @@ package org.lanqiao.taru.library.service.impl;
 
 import org.lanqiao.taru.library.dao.BookDao;
 import org.lanqiao.taru.library.model.Book;
+import org.lanqiao.taru.library.model.Review;
 import org.lanqiao.taru.library.service.BookService;
 import org.lanqiao.taru.library.vo.ArticleVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,15 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> selectBooksLike(String bookName) {
         return bookDaoImpl.selectBooksLike(bookName);
+    }
+
+    @Override
+    public List<Book> queryBookByCategroyId(String categroyId) {
+        return bookDaoImpl.queryBookByCategroyId(categroyId);
+    }
+
+    @Override
+    public List<Review> queryReview(String bookId) {
+        return bookDaoImpl.queryReview(bookId);
     }
 }
