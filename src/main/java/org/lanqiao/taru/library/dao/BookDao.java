@@ -40,4 +40,9 @@ public interface BookDao {
 
 //    模糊查询
     public List<Book> selectBooksLike(String bookName);
+
+//    根据类别id查询书籍
+    public List<Book> queryBookByCategroyId(String categroyId);
+//    查看书评根据书籍id
+    public List<Review> queryReview(String bookId);
 }
