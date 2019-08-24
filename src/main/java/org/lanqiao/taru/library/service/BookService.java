@@ -1,6 +1,7 @@
 package org.lanqiao.taru.library.service;
 
 import org.lanqiao.taru.library.model.Book;
+import org.lanqiao.taru.library.model.Review;
 import org.lanqiao.taru.library.vo.ArticleVo;
 
 import java.util.List;
@@ -27,4 +28,10 @@ public interface BookService {
 
     //    模糊查询
     public List<Book> selectBooksLike(String bookName);
+
+    //    根据类别id查询书籍
+    public List<Book> queryBookByCategroyId(String categroyId);
+
+    //    查看书评根据书籍id
+    public List<Review> queryReview(String bookId);
 }
