@@ -1,6 +1,7 @@
 package org.lanqiao.taru.library.api;
 
 import org.lanqiao.taru.library.model.Book;
+import org.lanqiao.taru.library.model.Review;
 import org.lanqiao.taru.library.service.BookService;
 import org.lanqiao.taru.library.vo.ArticleVo;
 import org.lanqiao.taru.library.vo.JsonResult;
@@ -143,6 +144,45 @@ public class BookApi {
                 jsonResult=new JsonResult("200","预览成功",list);
             }else{
                 jsonResult=new JsonResult("404","预览失败，此书籍或章节不存在",null);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            jsonResult=new JsonResult("500","预览异常",e.getMessage());
+        }
+        return jsonResult;
+    }
+//    queryBookByCategroyId
+    @RequestMapping("/api/book/queryBookByCategroyId")
+    public JsonResult queryBookByCategroyId(String categroyId){
+        JsonResult jsonResult;
+        try{
+            List<Book> list= bookService.queryBookByCategroyId(categroyId);
+            System.out.println(list.size());
+            if(list!=null){
+//                System.out.println(list.get(0).getBookId());
+                jsonResult=new JsonResult("200","预览成功",list);
+            }else{
+                jsonResult=new JsonResult("404","预览失败，暂无此类别书籍",null);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            jsonResult=new JsonResult("500","预览异常",e.getMessage());
+        }
+        return jsonResult;
+    }
+
+
+
+    @RequestMapping("/api/review/queryReview")
+    @ResponseBody
+    public JsonResult queryReview(String bookId) {
+        JsonResult jsonResult;
+        try{
+            List<Review> list= bookService.queryReview(bookId);
+            if(list!=null){
+                jsonResult=new JsonResult("200","预览成功",list);
+            }else{
+                jsonResult=new JsonResult("404","预览失败，暂无此类别书籍",null);
             }
         }catch(Exception e){
             e.printStackTrace();
