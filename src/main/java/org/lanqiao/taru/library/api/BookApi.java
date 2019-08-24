@@ -5,6 +5,7 @@ import org.lanqiao.taru.library.model.Review;
 import org.lanqiao.taru.library.service.BookService;
 import org.lanqiao.taru.library.vo.ArticleVo;
 import org.lanqiao.taru.library.vo.JsonResult;
+import org.lanqiao.taru.library.vo.ReviewVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -171,22 +172,21 @@ public class BookApi {
         return jsonResult;
     }
 
-
-
+//查询评论
     @RequestMapping("/api/review/queryReview")
     @ResponseBody
     public JsonResult queryReview(String bookId) {
         JsonResult jsonResult;
         try{
-            List<Review> list= bookService.queryReview(bookId);
+            List<ReviewVo> list= bookService.queryReview(bookId);
             if(list!=null){
-                jsonResult=new JsonResult("200","预览成功",list);
+                jsonResult=new JsonResult("200","查看成功",list);
             }else{
-                jsonResult=new JsonResult("404","预览失败，暂无此类别书籍",null);
+                jsonResult=new JsonResult("404","查看失败，暂无此类别书籍",null);
             }
         }catch(Exception e){
             e.printStackTrace();
-            jsonResult=new JsonResult("500","预览异常",e.getMessage());
+            jsonResult=new JsonResult("500","查看异常",e.getMessage());
         }
         return jsonResult;
     }

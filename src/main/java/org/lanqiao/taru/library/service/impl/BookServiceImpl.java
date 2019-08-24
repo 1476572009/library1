@@ -5,6 +5,7 @@ import org.lanqiao.taru.library.model.Book;
 import org.lanqiao.taru.library.model.Review;
 import org.lanqiao.taru.library.service.BookService;
 import org.lanqiao.taru.library.vo.ArticleVo;
+import org.lanqiao.taru.library.vo.ReviewVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +52,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Review> queryReview(String bookId) {
+    public List<ReviewVo> queryReview(String bookId) {
         return bookDaoImpl.queryReview(bookId);
     }
 }

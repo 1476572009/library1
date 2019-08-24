@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.lanqiao.taru.library.model.Book;
 import org.lanqiao.taru.library.model.Review;
 import org.lanqiao.taru.library.vo.ArticleVo;
+import org.lanqiao.taru.library.vo.ReviewVo;
 
 import java.util.List;
 @Mapper
@@ -44,5 +45,5 @@ public interface BookDao {
 //    根据类别id查询书籍
     public List<Book> queryBookByCategroyId(String categroyId);
 //    查看书评根据书籍id
-    public List<Review> queryReview(String bookId);
+    public List<ReviewVo> queryReview(String bookId);
 }
