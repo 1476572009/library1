@@ -111,20 +111,18 @@
     </select>
 
     <resultMap id="queryReviewMap" type="org.lanqiao.taru.library.vo.ReviewVo">
-        <id property="userId" column="fatherUserId" jdbcType="VARCHAR"></id>
-        <result property="userIcon" column="sonUserName" jdbcType="VARCHAR"></result>
+        <result property="userId" column="fatherUserId" jdbcType="VARCHAR"></result>
+        <result property="userIcon" column="fatherUserIcon" jdbcType="VARCHAR"></result>
         <result property="userName" column="fatherUserName" jdbcType="VARCHAR"></result>
         <result property="reviewComment" column="fatherReviewComment" jdbcType="VARCHAR"></result>
         <collection property="reviews" ofType="org.lanqiao.taru.library.vo.ReviewVo">
-            <id property="userId" column="sonUserId" jdbcType="VARCHAR"></id>
-            <result property="userIcon" column="sonUserName" jdbcType="VARCHAR"></result>
+            <result property="userId" column="sonUserId" jdbcType="VARCHAR"></result>
+            <result property="userIcon" column="sonUserIcon" jdbcType="VARCHAR"></result>
             <result property="userName" column="sonUserName" jdbcType="VARCHAR"></result>
             <result property="reviewComment" column="sonReviewComment" jdbcType="VARCHAR"></result>
         </collection>
     </resultMap>
     <select id="queryReview" resultMap="queryReviewMap">
-
-
  select
       father_user.USER_ID fatherUserId,
       father_user.USER_ICON fatherUserIcon,
