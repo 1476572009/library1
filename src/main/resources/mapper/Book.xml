@@ -8,6 +8,7 @@
     <!--public List<Book> queryList();-->
     <resultMap id="query" type="org.lanqiao.taru.library.model.Book">
         <id property="bookId" column="BOOK_ID" jdbcType="VARCHAR"></id>
+        <result property="bookPicture" column="BOOK_PICTURE" jdbcType="VARCHAR" ></result>
         <result property="bookCode" column="BOOK_CODE" jdbcType="VARCHAR" ></result>
         <result property="bookName" column="BOOK_NAME" jdbcType="VARCHAR"></result>
         <result property="bookAuthor" column="BOOK_AUTHOR" jdbcType="VARCHAR"></result>
@@ -92,6 +93,7 @@
 
     <resultMap id="queryCategroyMap" type="org.lanqiao.taru.library.vo.CategroyVo">
         <id property="bookId" column="BOOK_ID" jdbcType="VARCHAR"></id>
+        <result property="bookPicture" column="BOOK_PICTURE" jdbcType="VARCHAR" ></result>
         <result property="bookCode" column="BOOK_CODE" jdbcType="VARCHAR" ></result>
         <result property="bookName" column="BOOK_NAME" jdbcType="VARCHAR"></result>
         <result property="bookAuthor" column="BOOK_AUTHOR" jdbcType="VARCHAR"></result>
@@ -108,73 +110,28 @@
         left join books b on c.CATEGORY_ID=b.BOOK_CATEGORY_ID where c.CATEGORY_ID=#{categroyId}
     </select>
 
-
-    <!--根据bookId查询书籍评论-->
-    <!--<resultMap id="queryReviewMap" type="org.lanqiao.taru.library.model.Review">-->
-
-            <!--<result property="reviewUserId" column="father_review_user_id" jdbcType="VARCHAR"></result>-->
-            <!--<result property="reviewBookId" column="father_review_book_id" jdbcType="VARCHAR"></result>-->
-            <!--<result property="reviewComment" column="father_review_comment" jdbcType="VARCHAR"></result>-->
-            <!--&lt;!&ndash;<result property="reviewFatherId" column="father_review_father_id" jdbcType="VARCHAR"></result>&ndash;&gt;-->
-            <!--<result property="reviewStatus" column="father_review_status" jdbcType="VARCHAR"></result>-->
-            <!--<collection property="reviews" ofType="org.lanqiao.taru.library.model.Review">-->
-                <!--<id property="reviewId" column="REVIEW_ID" jdbcType="VARCHAR"></id>-->
-                <!--<result property="reviewUserId" column="REVIEW_USER_ID" jdbcType="VARCHAR"></result>-->
-                <!--<result property="reviewBookId" column="RIVEW_BOOK_ID" jdbcType="VARCHAR"></result>-->
-                <!--<result property="reviewComment" column="REVIEW_COMMENT" jdbcType="VARCHAR"></result>-->
-                <!--<result property="reviewFatherId" column="REVIEW_FATHER_ID" jdbcType="VARCHAR"></result>-->
-                <!--<result property="reviewStatus" column="REVIEW_STATUS" jdbcType="VARCHAR"></result>-->
-
-            <!--</collection>-->
-    <!--</resultMap>-->
-
-
-    <!--select-->
-    <!--father.REVIEW_ID father_review_id,-->
-    <!--father.RIVEW_BOOK_ID father_review_book_id,-->
-    <!--father.REVIEW_COMMENT father_review_comment,-->
-    <!--father.REVIEW_STATUS father_review_status,-->
-    <!--father.REVIEW_USER_ID father_review_user_id,-->
-    <!--son.*-->
-    <!--from review son-->
-    <!--left join review father-->
-    <!--on  father.REVIEW_ID=son.REVIEW_FATHER_ID where father.RIVEW_BOOK_ID=#{bookId}-->
-
-    <!--select-->
-    <!--father_user.USER_ID fatherUserId,-->
-    <!--father_user.USER_NAME fatherUserName,-->
-    <!--father.REVIEW_COMMENT fatherReviewComment ,-->
-    <!--son_user.USER_ID sonUserId,-->
-    <!--son_user.USER_NAME sonUserName,-->
-    <!--son.REVIEW_COMMENT sonReviewComment-->
-    <!--from review father-->
-    <!--left join user father_user on father.REVIEW_USER_ID=father_user.USER_ID-->
-    <!--left join review son on son.REVIEW_FATHER_ID=father.REVIEW_ID-->
-    <!--left join user son_user on son_user.USER_ID=son.REVIEW_USER_ID-->
-    <!--where father.RIVEW_BOOK_ID=#{bookId}-->
-
-
-
-
-
-
-
     <resultMap id="queryReviewMap" type="org.lanqiao.taru.library.vo.ReviewVo">
         <id property="userId" column="fatherUserId" jdbcType="VARCHAR"></id>
+        <result property="userIcon" column="sonUserName" jdbcType="VARCHAR"></result>
         <result property="userName" column="fatherUserName" jdbcType="VARCHAR"></result>
         <result property="reviewComment" column="fatherReviewComment" jdbcType="VARCHAR"></result>
         <collection property="reviews" ofType="org.lanqiao.taru.library.vo.ReviewVo">
             <id property="userId" column="sonUserId" jdbcType="VARCHAR"></id>
+            <result property="userIcon" column="sonUserName" jdbcType="VARCHAR"></result>
             <result property="userName" column="sonUserName" jdbcType="VARCHAR"></result>
             <result property="reviewComment" column="sonReviewComment" jdbcType="VARCHAR"></result>
         </collection>
     </resultMap>
     <select id="queryReview" resultMap="queryReviewMap">
+
+
  select
       father_user.USER_ID fatherUserId,
+      father_user.USER_ICON fatherUserIcon,
       father_user.USER_NAME fatherUserName,
       father.REVIEW_COMMENT fatherReviewComment ,
       son_user.USER_ID sonUserId,
+      son_user.USER_ICON sonUserIcon,
       son_user.USER_NAME sonUserName,
       son.REVIEW_COMMENT sonReviewComment
       from review father
