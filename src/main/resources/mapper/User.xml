@@ -14,7 +14,6 @@
         <result property="userStatus" column="USER_STATUS" jdbcType="VARCHAR"/>
         <result property="userEmail" column="USER_EMAIL" jdbcType="VARCHAR"/>
         <result property="userGrade" column="USER_GRADE" jdbcType="VARCHAR"/>
-
          </resultMap>
 
     <!-- 用户登录 -->
@@ -102,4 +101,8 @@ WHERE
     <insert id="userRegister">
         insert into user values(#{id},#{username},#{password},#{icon},#{address},#{email},#{telephone},#{grade},#{status},#{question},#{questions})
     </insert>
+    <!--根据用户查询用户详情-->
+    <select id="queryUserByuserId" resultMap="UserMap">
+        select * from user where USER_ID = #{userId}
+    </select>
 </mapper>

@@ -66,4 +66,11 @@ public class UserServiceImpl implements UserService {
     public int userRegiste(String id, String username, String password, String icon, String address, String email, String telephone, String grade, String status, String question, String questions) {
         return userDao.userRegister(id,username,password,icon,address,email,telephone,grade,status,question,questions);
     }
+    //根据用户Id详情查询用户详情
+    @Override
+    public User queryByUserId(String userId) {
+        return userDao.queryUserByuserId(userId);
+    }
+
+
 }

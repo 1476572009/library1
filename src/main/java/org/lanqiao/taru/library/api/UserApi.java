@@ -79,7 +79,6 @@ public class UserApi {
         JsonResult jsonResult = null;
         try {
             List<Book> book = impl.queryalll(uid);
-
             jsonResult = new JsonResult("200","签到成功",book);
 
         }catch (Exception e){
@@ -100,6 +99,22 @@ public class UserApi {
         }catch (Exception e){
             e.printStackTrace();
             jsonResult = new JsonResult("400","失败","");
+        }
+        return jsonResult;
+    }
+    //根据用户Id查询用户详情
+    @RequestMapping("/api/user/queryByuserId")
+    public JsonResult queryByuId(String userId){
+        JsonResult jsonResult = null;
+        try{
+            if (userId != null){
+                User user = impl.queryByUserId(userId);
+                jsonResult = new JsonResult("200","查询成功",user);
+            }else{
+                jsonResult = new JsonResult("404","查询失败，未传入参数！",null);
+            }
+        }catch(Exception e){
+            jsonResult = new JsonResult("500","查询失败",e.getMessage());
         }
         return jsonResult;
     }
