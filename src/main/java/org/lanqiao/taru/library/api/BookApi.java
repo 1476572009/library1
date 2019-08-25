@@ -180,6 +180,7 @@ public class BookApi {
         JsonResult jsonResult;
         try{
             List<ReviewVo> list= bookService.queryReview(bookId);
+            System.out.println(list.size());
             if(list!=null){
                 jsonResult=new JsonResult("200","查看成功",list);
             }else{
