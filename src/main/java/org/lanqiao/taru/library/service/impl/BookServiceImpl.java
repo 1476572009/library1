@@ -55,4 +55,9 @@ public class BookServiceImpl implements BookService {
     public List<ReviewVo> queryReview(String bookId) {
         return bookDaoImpl.queryReview(bookId);
     }
+
+    @Override
+    public boolean insertReview(Review review) {
+        return bookDaoImpl.insertReview(review);
+    }
 }

@@ -141,4 +141,12 @@
       where father.RIVEW_BOOK_ID=#{bookId}
 
     </select>
+    
+    <!--添加评论-->
+    
+    <insert id="insertReview" parameterType="org.lanqiao.taru.library.model.Review">
+        INSERT INTO
+        review(REVIEW_ID,REVIEW_USER_ID,RIVEW_BOOK_ID,REVIEW_COMMENT,REVIEW_FATHER_ID,REVIEW_STATUS)
+        VALUES(#{reviewId},#{reviewUserId},#{reviewBookId},#{reviewComment},#{reviewFatherId},#{reviewStatus})
+    </insert>
 </mapper>
