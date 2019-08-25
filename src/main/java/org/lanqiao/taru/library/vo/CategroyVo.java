@@ -6,12 +6,22 @@ public class CategroyVo {
     private String bookName;
     private String bookAuthor;
     private String bookCategoryId;
-//    private String bookPublishTime;
+    private String bookPicture;
+    //    private String bookPublishTime;
     private String bookPrice;
     private String bookStockSize;
     private String bookComment;
     private String bookStatus;
     private  String categroyName;
+
+    public String getBookPicture() {
+        return bookPicture;
+    }
+
+    public void setBookPicture(String bookPicture) {
+        this.bookPicture = bookPicture;
+    }
+
 
     public String getBookId() {
         return bookId;
