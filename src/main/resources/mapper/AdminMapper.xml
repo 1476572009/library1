@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lanqiao.taru.library.dao.AdminDao">
+    <!--根据图书id查询图书详情-->
+
+    <resultMap id="queryMap" type="org.lanqiao.taru.library.model.Book">
+        <id property="bookId" column="BOOK_ID" jdbcType="VARCHAR"></id>
+        <result property="bookPicture" column="BOOK_PICTURE" jdbcType="VARCHAR" ></result>
+        <result property="bookCode" column="BOOK_CODE" jdbcType="VARCHAR" ></result>
+        <result property="bookName" column="BOOK_NAME" jdbcType="VARCHAR"></result>
+        <result property="bookAuthor" column="BOOK_AUTHOR" jdbcType="VARCHAR"></result>
+        <result property="bookCategoryId" column="BOOK_CATEGORY_ID" jdbcType="VARCHAR"></result>
+        <result property="bookPublishTime" column="BOOK_PUBLISH_TIME" jdbcType="VARCHAR"></result>
+        <result property="bookPrice" column="BOOK_PRICE" jdbcType="VARCHAR"></result>
+        <result property="bookStockSize" column="BOOK_STOCK_SIZE" jdbcType="VARCHAR"></result>
+        <result property="bookComment" column="BOOK_COMMENT" jdbcType="VARCHAR"></result>
+        <result property="bookStatus" column="BOOK_STATUS" jdbcType="TINYINT"></result>
+
+    </resultMap>
+
+    <!--删除图书根据图书id 逻辑删除-->
+    <update id="updateBookStatusBybookId">
+         UPDATE books set BOOK_STATUS=0 where BOOK_ID=#{bookId}
+    </update>
+
+    <!--修改-->
+    <update id="updateBookInfoBybookId" parameterType="org.lanqiao.taru.library.model.Book">
+         UPDATE books set BOOK_NAME=#{bookName},BOOK_AUTHOR=#{bookAuthor},BOOK_CATEGORY_ID=#{bookCategoryId},
+								      BOOK_PRICE=#{bookPrice},
+								      BOOK_STOCK_SIZE=#{bookStockSize},BOOK_COMMENT=#{bookComment}  WHERE book_id=#{bookId}
+    </update>
+
+    <!--添加书籍-->
+    <insert id="insertIntoBooks" parameterType="org.lanqiao.taru.library.model.Book">
+        insert into books (BOOK_ID,BOOK_CODE,BOOK_NAME,
+									BOOK_AUTHOR,BOOK_CATEGORY_ID,BOOK_PUBLISH_TIME,
+									BOOK_PICTURE,BOOK_PRICE,BOOK_STOCK_SIZE,
+									BOOK_COMMENT,BOOK_STATUS)
+		                    VALUES(#{bookId},#{bookCode},#{bookName},
+		                            #{bookAuthor},#{bookCategoryId},#{bookPublishTime},
+		                            #{bookPicture},#{bookPrice},#{bookStockSize},
+		                            #{bookComment},#{bookStatus})
+    </insert>
+</mapper>
