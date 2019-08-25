@@ -44,7 +44,7 @@ public class AlipayApi {
             @ApiImplicitParam(name = "total_amount", value = "总价格",paramType = "query",dataType = "String", required = true),
             @ApiImplicitParam(name = "subject", value = "订单标题",paramType = "query",dataType = "String", required = true),
             @ApiImplicitParam(name = "body", value = "订单备注", paramType = "query", dataType = "String", required = false)})
-    @RequestMapping(value = "alipaySum",method = RequestMethod.GET)
+    @RequestMapping(value = "alipaySum")
     public String alipayIumpSum(String userId,String bookcars,String total_amount,String subject,String body,HttpServletResponse response, HttpServletRequest request) throws Exception {
         String[] list=bookcars.split(",");
 

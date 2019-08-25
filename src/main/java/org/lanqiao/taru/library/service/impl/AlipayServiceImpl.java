@@ -7,6 +7,7 @@ import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.request.AlipayTradeQueryRequest;
 import com.alipay.api.response.AlipayTradeQueryResponse;
+
 import org.lanqiao.taru.library.config.AlipayConfig;
 import org.lanqiao.taru.library.dao.BookDao;
 import org.lanqiao.taru.library.dao.BookcarDao;
@@ -58,9 +59,6 @@ public class AlipayServiceImpl implements AlipayService {
             b.setBorrowTime(bookcar.getBookcarBorrowTime());
             b.setBorrowRemaintime(bookcar.getBookcarBorrowTime());
             Book book=bookDao.queryDetail(bookcar.getBookcarBookId());
-            System.out.println(Integer.valueOf(book.getBookPrice()));
-            System.out.println(Integer.valueOf(bookcar.getBookcarBorrowTime()));
-            System.out.println(String.valueOf(Integer.valueOf(book.getBookPrice())*Integer.valueOf(bookcar.getBookcarBorrowTime())));
             b.setBorrowBookTotalPrice(String.valueOf(Integer.valueOf(book.getBookPrice())*Integer.valueOf(bookcar.getBookcarBorrowTime())));
             b.setBorrowOrderId(o.getOrderId());
             bod.insert(b);
@@ -75,7 +73,7 @@ public class AlipayServiceImpl implements AlipayService {
         AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest();
         alipayRequest.setReturnUrl(AlipayConfig.return_url);
         alipayRequest.setNotifyUrl(AlipayConfig.notify_url);
-  //      AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();//创建API对应的request类
+        //AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();//创建API对应的request类
 
 
         alipayRequest.setBizContent("{\"out_trade_no\":\""+ out_trade_no +"\","
@@ -95,8 +93,9 @@ public class AlipayServiceImpl implements AlipayService {
 
         //请求
         String result = alipayClient.pageExecute(alipayRequest).getBody();
-   //     AlipayTradeQueryResponse response = alipayClient.execute(request);//通过alipayClient调用API，获得对应的response类
-    //    System.out.print(response.getBody());
+
+//        AlipayTradeQueryResponse response = alipayClient.execute(request);//通过alipayClient调用API，获得对应的response类
+//        System.out.print(response.getBody());
 
         return result;
     }
