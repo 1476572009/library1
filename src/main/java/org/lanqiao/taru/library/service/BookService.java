@@ -35,4 +35,7 @@ public interface BookService {
 
     //    查看书评根据书籍id
     public List<ReviewVo> queryReview(String bookId);
+
+    //    添加书评
+    public boolean insertReview(Review review);
 }

@@ -38,7 +38,10 @@
     <select id="query" parameterType="org.lanqiao.taru.library.model.Borrow" resultMap="BorrowMap">
         	select * from borrow bo left join books b on bo.borrow_book_id=b.book_id where bo.borrow_order_id=#{borrowOrderId};
     </select>
-
+    <!--根据用户ID和书籍Id-->
+    <select id="queryBookByUidandBookId" resultType="Integer">
+       select count(*) from borrow where BORROW_BOOK_ID = #{bookId} and BORROW_USER_ID= #{userId}
+    </select>
 
 
 

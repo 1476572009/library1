@@ -28,4 +28,8 @@ public class BookcarServiceImpl implements BookcarService {
     public List Bookcarlist(Bookcar bookcar){
         return bd.Bookcarlist(bookcar);
     }
+    //修改用户购书车书籍状态根据Id
+    public int updateByCarId(String bookCarId){
+        return bd.updateByCarId(bookCarId);
+    }
 }

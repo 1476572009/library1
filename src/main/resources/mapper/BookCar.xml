@@ -79,5 +79,8 @@
     <select id="queryBookcar" resultType="org.lanqiao.taru.library.model.Bookcar"  >
         select BOOKCAR_ID as bookcarId,BOOKCAR_BOOK_ID as bookcarBookId , BOOKCAR_USER_ID as bookcarUserId,BOOKCAR_BORROW_TIME as bookcarBorrowTime,BOOKCAR_STATUS as bookcarStatus from bookcar  where BOOKCAR_ID=#{bookcarId}
     </select>
-
+    <!--根据bookcar用户ID修改该书车中书状态为1-->
+    <update id="updateByCarId" >
+        update bookcar set BOOKCAR_STATUS = 1 where BOOKCAR_ID = #{bookCarId}
+    </update>
 </mapper>

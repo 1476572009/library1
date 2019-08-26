@@ -15,6 +15,16 @@ public class ReviewVo {
 
     String userId;
     String userName;
+    String userIcon;
+    String reviewComment;
+    List<ReviewVo> reviews;
+    public String getUserIcon() {
+        return userIcon;
+    }
+
+    public void setUserIcon(String userIcon) {
+        this.userIcon = userIcon;
+    }
 
     public String getReviewComment() {
         return reviewComment;
@@ -24,8 +34,7 @@ public class ReviewVo {
         this.reviewComment = reviewComment;
     }
 
-    String reviewComment;
-    List<ReviewVo> reviews;
+
     public String getUserName() {
         return userName;
     }

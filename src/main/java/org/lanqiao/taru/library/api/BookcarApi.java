@@ -106,5 +106,21 @@ public class BookcarApi {
         }
         return result;
     }
+    //根据用户书车Id修改书车图书  逻辑删除
+    @RequestMapping("/updateBycarId")
+    public JsonResult UpdateBookcarBook(String bookCarId){
+        JsonResult jsonResult = null;
+        if (bookCarId != null){
+            try{
+                int i = bs.updateByCarId(bookCarId);
+                jsonResult = new JsonResult("200","修改成功！",i);
+            }catch(Exception e){
+                jsonResult = new JsonResult("500","修改错误！",e.getMessage());
+            }
+        }else{
+            jsonResult = new JsonResult("404","参数未找到！无法修改",null);
+        }
+        return jsonResult;
+    }
 
 }

@@ -3,6 +3,7 @@ package org.lanqiao.taru.library.api;
 import org.lanqiao.taru.library.model.Book;
 import org.lanqiao.taru.library.model.Review;
 import org.lanqiao.taru.library.service.BookService;
+import org.lanqiao.taru.library.util.IdUtil;
 import org.lanqiao.taru.library.vo.ArticleVo;
 import org.lanqiao.taru.library.vo.JsonResult;
 import org.lanqiao.taru.library.vo.ReviewVo;
@@ -179,6 +180,7 @@ public class BookApi {
         JsonResult jsonResult;
         try{
             List<ReviewVo> list= bookService.queryReview(bookId);
+            System.out.println(list.size());
             if(list!=null){
                 jsonResult=new JsonResult("200","查看成功",list);
             }else{
@@ -187,6 +189,32 @@ public class BookApi {
         }catch(Exception e){
             e.printStackTrace();
             jsonResult=new JsonResult("500","查看异常",e.getMessage());
+        }
+        return jsonResult;
+    }
+//    添加评论
+    @RequestMapping("/api/review/insertReview")
+    @ResponseBody
+    public JsonResult insertReview(String reviewUserId,String reviewBookId,String reviewComment,String reviewFatherId){
+        JsonResult jsonResult;
+        Review review;
+        try{
+            review=new Review();
+            review.setReviewId(IdUtil.getUuid());
+            review.setReviewUserId(reviewUserId);
+            review.setReviewBookId(reviewBookId);
+            review.setReviewComment(reviewComment);
+            review.setReviewFatherId(reviewFatherId);
+            review.setReviewStatus("1");
+            boolean isTrue= bookService.insertReview(review);
+            if(isTrue){
+                jsonResult=new JsonResult("200","评论成功",isTrue);
+            }else{
+                jsonResult=new JsonResult("404","评论失败",null);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            jsonResult=new JsonResult("500","评论异常",e.getMessage());
         }
         return jsonResult;
     }

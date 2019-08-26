@@ -3,16 +3,13 @@ package org.lanqiao.taru.library.api;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.lanqiao.taru.library.model.Book;
 import org.lanqiao.taru.library.model.Borrow;
 import org.lanqiao.taru.library.service.BorrowService;
 import org.lanqiao.taru.library.vo.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
@@ -48,7 +45,7 @@ public class BorrowApi {
     @ApiOperation(value="查询订单详情")
     @ApiImplicitParam(name = "borrowOrderId", value = "订单ID",paramType = "query",dataType = "String", required = true)
     @RequestMapping(value = "/query",method = RequestMethod.GET)
-    public JsonResult query(Borrow borrow){
+    public JsonResult query(@RequestParam Borrow borrow){
         try {
             List list=bs.query(borrow);
 
@@ -63,6 +60,23 @@ public class BorrowApi {
             result=new JsonResult("400","异常",null);
         }
         return result;
+    }
+    //根据用户ID和书籍ID查询用户借书列表
+    @RequestMapping("/bookByUidandBookId")
+    public JsonResult queryByuserAnd(String userId,String bookId){
+        JsonResult jsonResult = null;
+        if (userId != null && bookId != null){
+            int book = 0 ;
+            try{
+                book = bs.queryBookByUidandBookId(userId,bookId);
+                jsonResult = new JsonResult("200","查询成功！",book);
+            }catch (Exception e){
+                jsonResult = new JsonResult("500","查询失败！",e.getMessage());
+            }
+        }else{
+            jsonResult = new JsonResult("404","参数未传递！",null);
+        }
+        return jsonResult;
     }
 
 

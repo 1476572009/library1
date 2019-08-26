@@ -9,4 +9,5 @@ import java.util.List;
 public interface BorrowDao {
     public int insert(Borrow borrow);
     public List query(Borrow borrow);
+    public int queryBookByUidandBookId(String userId, String bookId);
 }

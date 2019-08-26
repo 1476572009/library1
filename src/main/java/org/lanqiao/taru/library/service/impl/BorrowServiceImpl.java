@@ -1,6 +1,7 @@
 package org.lanqiao.taru.library.service.impl;
 
 import org.lanqiao.taru.library.dao.BorrowDao;
+import org.lanqiao.taru.library.model.Book;
 import org.lanqiao.taru.library.model.Borrow;
 import org.lanqiao.taru.library.service.BorrowService;
 import org.lanqiao.taru.library.util.IdUtil;
@@ -20,8 +21,11 @@ public class BorrowServiceImpl implements BorrowService {
         return bd.insert(borrow);
     }
 
-    public List query(Borrow borrow){
+    public List query(Borrow borrow){return bd.query(borrow);}
 
-        return bd.query(borrow);
+    @Override
+    public int queryBookByUidandBookId(String userId, String bookId) {
+        return bd.queryBookByUidandBookId(userId,bookId);
     }
+
 }
