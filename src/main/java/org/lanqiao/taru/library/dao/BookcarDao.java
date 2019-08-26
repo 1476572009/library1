@@ -12,4 +12,6 @@ public interface BookcarDao {
     public int update(Bookcar bookcar);
     public List Bookcarlist(Bookcar bookcar);
     public Bookcar queryBookcar(String bookcarId);
+    //根据bookcar用户ID修改该书车中书状态为1
+    public int updateByCarId(String bookCarId);
 }

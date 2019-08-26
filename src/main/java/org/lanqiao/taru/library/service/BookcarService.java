@@ -10,4 +10,5 @@ public interface BookcarService {
     public int delBookcars(String[] bookcars);
     public int update(Bookcar bookcar);
     public List Bookcarlist(Bookcar booker);
+    public int updateByCarId(String bookCarId);
 }
