@@ -42,6 +42,7 @@
     </update>
 
     <resultMap id="CollectMap" type="org.lanqiao.taru.library.model.Book">
+        <result property="bookId" column="BOOK_ID" jdbcType="VARCHAR"/>
         <result property="bookName" column="BOOK_NAME" jdbcType="VARCHAR"/>
         <result property="bookAuthor" column="BOOK_AUTHOR" jdbcType="VARCHAR"/>
         <result property="bookPrice" column="BOOK_PRICE" jdbcType="VARCHAR"/>
@@ -50,6 +51,7 @@
     </resultMap>
     <select id="queryal" resultMap="CollectMap">
 SELECT
+    books.BOOK_ID,
 	books.BOOK_NAME,
 	books.BOOK_AUTHOR,
 	books.BOOK_PRICE,
@@ -57,10 +59,10 @@ SELECT
 	books.BOOK_STOCK_SIZE
 
 FROM
-	 collect
-	LEFT JOIN books ON books.BOOK_ID = collect.COLLECT_BOOK_ID
+	books
+	LEFT JOIN  borrow ON books.BOOK_ID =  borrow.BORROW_BOOK_ID
 WHERE
-	collect.COLLECT_USER_ID = #{uid}
+	borrow.BORROW_USER_ID = #{uid}
     </select>
     <insert id="insertCol" >
         insert into collect values (#{collectid},#{uid},#{bookid},#{time},#{status})
