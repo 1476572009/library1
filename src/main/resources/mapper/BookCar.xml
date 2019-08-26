@@ -44,6 +44,7 @@
             <result property="bookAuthor" column="BOOK_AUTHOR" jdbcType="VARCHAR"></result>
             <result property="bookCategoryId" column="BOOK_CATEGORY_ID" jdbcType="VARCHAR"></result>
             <result property="bookPublishTime" column="BOOK_PUBLISH_TIME" jdbcType="VARCHAR"></result>
+            <result property="bookPicture" column="BOOK_PICTURE" jdbcType="VARCHAR"></result>
             <result property="bookPrice" column="BOOK_PRICE" jdbcType="VARCHAR"></result>
             <result property="bookStockSize" column="BOOK_STOCK_SIZE" jdbcType="VARCHAR"></result>
             <result property="bookComment" column="BOOK_COMMENT" jdbcType="VARCHAR"></result>
@@ -72,7 +73,7 @@
     </update>
     
     <select id="Bookcarlist" parameterType="org.lanqiao.taru.library.model.Bookcar" resultMap="BookcarMap">
-        select bc.*,b.* from bookcar bc left join books b on bc.bookcar_book_id=b.book_id where bc.BOOKCAR_USER_ID=#{bookcarUserId}
+        select bc.*,b.* from bookcar bc left join books b on bc.bookcar_book_id=b.book_id where bc.BOOKCAR_USER_ID=#{bookcarUserId} and bc.BOOKCAR_STATUS=1
     </select>
 
     <select id="queryBookcar" resultType="org.lanqiao.taru.library.model.Bookcar"  >

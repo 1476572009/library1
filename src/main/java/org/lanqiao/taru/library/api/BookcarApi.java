@@ -96,11 +96,9 @@ public class BookcarApi {
     public JsonResult Bookcarlist(Bookcar bookcar){
         try {
             List list=bs.Bookcarlist(bookcar);
-            if (list.size()>0){
+
                 result =new JsonResult("200","查询成功",list);
-            }else {
-                result =new JsonResult("400","查询失败",null);
-            }
+
 
         }catch (Exception e){
             e.printStackTrace();
