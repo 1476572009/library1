@@ -1,6 +1,9 @@
 package org.lanqiao.taru.library.api;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.lanqiao.taru.library.model.Book;
+import org.lanqiao.taru.library.model.Order;
 import org.lanqiao.taru.library.model.Review;
 import org.lanqiao.taru.library.service.BookService;
 import org.lanqiao.taru.library.util.IdUtil;
@@ -215,6 +218,65 @@ public class BookApi {
         }catch(Exception e){
             e.printStackTrace();
             jsonResult=new JsonResult("500","评论异常",e.getMessage());
+        }
+        return jsonResult;
+    }
+
+
+    //    根据id删除订单（逻辑删除）
+    @RequestMapping("/api/order/deleteOrderByOrderId")
+    @ResponseBody
+    public JsonResult deleteOrderByOrderId(String orderId) {
+        JsonResult jsonResult = null;
+        try {
+            int i=bookService.deleteOrderByOrderId(orderId);
+            if(i>0){
+                jsonResult = new JsonResult("200", "删除订单成功", i);
+            }else{
+                jsonResult = new JsonResult("404", "删除订单失败，该订单已被删除", i);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            jsonResult = new JsonResult("400", "失败", e.getMessage());
+        }
+        return jsonResult;
+    }
+    //    根据订单id查询订单详情
+    @RequestMapping("/api/order/queryOrderByOrderId")
+    @ResponseBody
+    public JsonResult queryOrderByOrderId(String orderId) {
+        JsonResult jsonResult = null;
+        try {
+            Order order=bookService.queryOrderByOrderId(orderId);
+            if(order!=null){
+                jsonResult = new JsonResult("200", "查询订单成功", order);
+            }else{
+                jsonResult = new JsonResult("404", "查询订单失败，该订单已被删除", order);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            jsonResult = new JsonResult("500", "查询订单异常", e.getMessage());
+        }
+        return jsonResult;
+    }
+
+    //    查询订单列表（带分页）
+    @RequestMapping("/api.order/queryOrderList")
+    @ResponseBody
+    public JsonResult queryOrderList(int pageNum,int pageSize) {
+        JsonResult jsonResult = null;
+        try {
+            PageHelper.startPage(pageNum, pageSize);
+            List<Order> orders=bookService.queryOrderList();
+            PageInfo<Order> page = new PageInfo<Order>(orders);
+            if(orders.size()>0){
+                jsonResult = new JsonResult("200", "查询订单列表成功", orders);
+            }else{
+                jsonResult = new JsonResult("404", "查询订单列表失败，该订单已被删除", orders);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            jsonResult = new JsonResult("500", "查询订单列表异常", e.getMessage());
         }
         return jsonResult;
     }

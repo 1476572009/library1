@@ -2,6 +2,7 @@ package org.lanqiao.taru.library.service.impl;
 
 import org.lanqiao.taru.library.dao.BookDao;
 import org.lanqiao.taru.library.model.Book;
+import org.lanqiao.taru.library.model.Order;
 import org.lanqiao.taru.library.model.Review;
 import org.lanqiao.taru.library.service.BookService;
 import org.lanqiao.taru.library.vo.ArticleVo;
@@ -60,4 +61,22 @@ public class BookServiceImpl implements BookService {
     public boolean insertReview(Review review) {
         return bookDaoImpl.insertReview(review);
     }
+
+    //    根据id删除订单（逻辑删除）
+    @Override
+    public int deleteOrderByOrderId(String orderId) {
+        return bookDaoImpl.deleteOrderByOrderId(orderId);
+    }
+    //    根据订单查询订单详情
+    @Override
+    public Order queryOrderByOrderId(String orderId) {
+        return bookDaoImpl.queryOrderByOrderId(orderId);
+    }
+
+    //    查询订单列表（带分页）
+    @Override
+    public List<Order> queryOrderList() {
+        return bookDaoImpl.queryOrderList();
+    }
+
 }

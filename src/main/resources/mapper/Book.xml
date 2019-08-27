@@ -147,4 +147,44 @@
         review(REVIEW_ID,REVIEW_USER_ID,RIVEW_BOOK_ID,REVIEW_COMMENT,REVIEW_FATHER_ID,REVIEW_STATUS)
         VALUES(#{reviewId},#{reviewUserId},#{reviewBookId},#{reviewComment},#{reviewFatherId},#{reviewStatus})
     </insert>
+
+
+
+
+    <resultMap id="OrderMap" type="org.lanqiao.taru.library.model.Order">
+        <id property="orderId" column="ORDER_ID" jdbcType="VARCHAR"/>
+        <result property="orderUserId" column="ORDER_USER_ID" jdbcType="VARCHAR"/>
+        <result property="orderDateTime" column="ORDER_DATE_TIME" jdbcType="VARCHAR"/>
+        <result property="orderIsSend" column="ORDER_IS_SEND" jdbcType="VARCHAR"/>
+        <result property="orderIsValid" column="ORDER_IS_VALID" jdbcType="VARCHAR"/>
+        <result property="orderTotalPrice" column="ORDER_TOTAL_PRICE" jdbcType="VARCHAR"/>
+        <result property="orderComment" column="ORDER_COMMENT" jdbcType="VARCHAR"/>
+        <result property="orderStatus" column="ORDER_STATUS" jdbcType="VARCHAR"/>
+        <collection property="borrows" ofType="org.lanqiao.taru.library.model.Borrow">
+            <id property="borrowId" column="BORROW_ID" jdbcType="VARCHAR"/>
+            <result property="borrowUserId" column="BORROW_USER_ID" jdbcType="VARCHAR"/>
+            <result property="borrowBookId" column="BORROW_BOOK_ID" jdbcType="VARCHAR"/>
+            <result property="borrowBookNumber" column="BORROW_BOOK_NUMBER" jdbcType="VARCHAR"/>
+            <result property="borrowBookBorrowDate" column="BORROW_BOOK_BORROW_DATE" jdbcType="VARCHAR"/>
+            <result property="borrowBookReturnDate" column="BORROW_BOOK_RETURN_DATE" jdbcType="VARCHAR"/>
+            <result property="borrowBookTotalPrice" column="BORROW_BOOK_TOTAL_PRICE" jdbcType="VARCHAR"/>
+            <result property="borrowBookIsReturn" column="BORROW_BOOK_IS_RETURN" jdbcType="VARCHAR"/>
+            <result property="borrowOrderId" column="BORROW_ORDER_ID" jdbcType="VARCHAR"/>
+            <result property="borrowStatus" column="BORROW_STATUS" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+    <!--    根据订单id删除订单-->
+    <update id="deleteOrderByOrderId">
+        UPDATE orders set ORDER_STATUS=0 where order_id=#{orderId}
+    </update>
+    <!--    根据订单id查询订单详情-->
+    <!--    TODO-->
+    <select id="queryOrderByOrderId" resultMap="OrderMap">
+    select * FROM orders where ORDER_ID=#{orderId}
+    </select>
+    <!--    查询所有订单（带分页）-->
+    <select id="queryOrderList" resultMap="OrderMap">
+    select * from orders
+    </select>
+
 </mapper>
