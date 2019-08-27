@@ -17,7 +17,7 @@
         <result property="borrowRemaintime" column="BORROW_REMAINTIME" jdbcType="INTEGER"/>
         <result property="borrowTime" column="BORROW_TIME" jdbcType="INTEGER"/>
         <result property="borrowStatus" column="BORROW_STATUS" jdbcType="VARCHAR"/>
-        <association property="book" javaType="org.lanqiao.taru.library.model.book">
+        <association property="book" javaType="org.lanqiao.taru.library.model.Book">
             <id property="bookId" column="BOOK_ID" jdbcType="VARCHAR"></id>
             <result property="bookCode" column="BOOK_CODE" jdbcType="VARCHAR" ></result>
             <result property="bookName" column="BOOK_NAME" jdbcType="VARCHAR"></result>
