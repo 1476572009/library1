@@ -59,7 +59,7 @@ public class AlipayServiceImpl implements AlipayService {
             b.setBorrowTime(bookcar.getBookcarBorrowTime());
             b.setBorrowRemaintime(bookcar.getBookcarBorrowTime());
             Book book=bookDao.queryDetail(bookcar.getBookcarBookId());
-            b.setBorrowBookTotalPrice(String.valueOf(Integer.valueOf(book.getBookPrice())*Integer.valueOf(bookcar.getBookcarBorrowTime())));
+            b.setBorrowBookTotalPrice(String.valueOf(Double.valueOf(book.getBookPrice())*Double.valueOf(bookcar.getBookcarBorrowTime())));
             b.setBorrowOrderId(o.getOrderId());
             bod.insert(b);
         }
