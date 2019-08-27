@@ -19,7 +19,6 @@ public class AdminApi {
     AdminService adminService;
     //    根据id查询图书详情
     @RequestMapping("/api/book/updateBookBybookId")
-    @ResponseBody
     public JsonResult updateBookBybookId(String bookId){
         JsonResult jsonResult;
         try{
@@ -37,21 +36,12 @@ public class AdminApi {
 
 //    修改
     @RequestMapping("/api/book/updateBookInfoBybookId")
-    @ResponseBody
-    public JsonResult updateBookInfoBybookId(String bookId,String bookName,String bookAuthor, String bookCategoryId,
-                                             String bookPrice,String bookStockSize,String bookComment){
+    public JsonResult updateBookInfoBybookId(Book book){
         JsonResult jsonResult;
-        Book book;
+
 
         try{
-            book =new Book();
-            book.setBookId(bookId);
-            book.setBookName(bookName);
-            book.setBookAuthor(bookAuthor);
-            book.setBookCategoryId(bookCategoryId);
-            book.setBookComment(bookComment);
-            book.setBookPrice(bookPrice);
-            book.setBookStockSize(bookStockSize);
+
             int line=adminService.updateBookInfoBybookId(book);
             if(line>0){
                 jsonResult=new JsonResult("200","修改成功",line);
@@ -66,24 +56,15 @@ public class AdminApi {
 
 //    添加图书
     @RequestMapping("/api/book/insertIntoBooks")
-    @ResponseBody
-public JsonResult insertIntoBooks(String bookName,String bookAuthor, String bookCategoryId,
-                                  String bookPicture,String bookPrice,String bookStockSize,String bookComment){
+public JsonResult insertIntoBooks(Book book){
     JsonResult jsonResult;
-    Book book;
 
     try{
-        book =new Book();
+
         book.setBookId(IdUtil.getUuid());
         book.setBookCode(IdUtil.getUuid());
         book.setBookPublishTime(IdUtil.getDateId());
-        book.setBookName(bookName);
-        book.setBookAuthor(bookAuthor);
-        book.setBookCategoryId(bookCategoryId);
-        book.setBookPicture(bookPicture);
-        book.setBookComment(bookComment);
-        book.setBookPrice(bookPrice);
-        book.setBookStockSize(bookStockSize);
+
         int line=adminService.insertIntoBooks(book);
 
         if(line>0){

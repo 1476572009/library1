@@ -12,7 +12,7 @@ public class AtuchInterceptor implements HandlerInterceptor {
 
         return true;
     }
-   //uf/verhtr3ugerygf
+
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
 

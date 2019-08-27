@@ -45,7 +45,7 @@ public class BorrowApi {
     @ApiOperation(value="查询订单详情")
     @ApiImplicitParam(name = "borrowOrderId", value = "订单ID",paramType = "query",dataType = "String", required = true)
     @RequestMapping(value = "/query",method = RequestMethod.GET)
-    public JsonResult query(@RequestParam Borrow borrow){
+    public JsonResult query( Borrow borrow){
         try {
             List list=bs.query(borrow);
 

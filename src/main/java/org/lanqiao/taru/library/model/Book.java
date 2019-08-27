@@ -1,8 +1,9 @@
 package org.lanqiao.taru.library.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Book {
+public class Book implements Serializable {
     private String bookId;
     private String bookCode;
     private String bookName;
