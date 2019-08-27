@@ -32,7 +32,7 @@
 ( ORDER_ID, ORDER_USER_ID, ORDER_DATE_TIME, ORDER_IS_SEND, ORDER_IS_VALID, ORDER_TOTAL_PRICE, ORDER_COMMENT, ORDER_STATUS )
 VALUES
    (#{orderId},#{orderUserId},now(),"0","0",#{orderTotalPrice},#{orderComment},"1")
-    </insert>
+</insert>
 
 
 
