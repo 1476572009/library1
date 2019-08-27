@@ -43,6 +43,12 @@
        select count(*) from borrow where BORROW_BOOK_ID = #{bookId} and BORROW_USER_ID= #{userId}
     </select>
 
+    <!--查询用户在借图书-->
+    <select id="selectBorrowBookByuid" resultMap="BorrowMap">
+    select * from borrow as a
+    left join books as b on a.BORROW_BOOK_ID = b.BOOK_ID
+    where a.BORROW_BOOK_IS_RETURN = 0 and  a.BORROW_STATUS = 1 and a.BORROW_USER_ID = #{userId}
+    </select>
 
 
 </mapper>
