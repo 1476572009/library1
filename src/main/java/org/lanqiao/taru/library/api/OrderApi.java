@@ -63,4 +63,25 @@ public class OrderApi {
         }
         return result;
     }
+
+    @ApiOperation(value="查询订单详情")
+    @ApiImplicitParam(name = "orderId", value = "用户ID",paramType = "query",dataType = "String", required = true)
+    @RequestMapping(value = "/send",method = RequestMethod.GET)
+    public JsonResult send(Order order){
+        try {
+            int i=os.send(order);
+
+            if (i>0){
+                result=new JsonResult("200","发货成功",i);
+            }else {
+                result =new JsonResult("400","发货失败",null);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            result=new JsonResult("400","异常",null);
+        }
+        return result;
+    }
+
 }

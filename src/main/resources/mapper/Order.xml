@@ -43,4 +43,8 @@ VALUES
     <update id="update">
         update orders set ORDER_IS_VALID=1 where ORDER_ID=#{orderId}
     </update>
+
+    <update id="send">
+        update orders set ORDER_IS_SEND=1 where ORDER_ID=#{orderId}
+    </update>
 </mapper>

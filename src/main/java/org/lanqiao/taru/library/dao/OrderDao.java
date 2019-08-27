@@ -11,4 +11,5 @@ public interface OrderDao {
     public int add(Order order);
     public List query(Order order);
     public int update(Order order);
+    public int send(Order order);
 }

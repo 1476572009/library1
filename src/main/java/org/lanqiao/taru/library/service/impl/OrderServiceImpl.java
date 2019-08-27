@@ -24,4 +24,5 @@ public class OrderServiceImpl implements OrderService {
     public int update(Order order){
         return od.update(order);
     }
+    public int send(Order order){return od.send(order);};
 }
