@@ -28,7 +28,7 @@
         <trim prefix="set" suffixOverrides=",">
             <if test="username!=null">user_name=#{username},</if>
             <if test="password!=null">user_password=#{password},</if>
-            <if test="icon!=null">user_icon=#{icon},</if>
+            <!--<if test="icon!=null">user_icon=#{icon},</if>-->
             <if test="address!=null">user_address=#{address},</if>
             <if test="email!=null">user_email=#{email},</if>
             <if test="telephone!=null">user_telephone=#{telephone},</if>
@@ -97,14 +97,24 @@ WHERE
     <result property="userName" column="USER_NAME"></result>
     <result property="userPassword" column="USER_PASSWORD"></result>
 </resultMap>
+
     <select id="forgetdeal" resultMap="ReturnMap">
         SELECT USER_PASSWORD ,USER_NAME from `user` WHERE USER_ID = #{id} and user_question = #{question} and user_questions = #{questions}
     </select>
+    <!--注册用户-->
     <insert id="userRegister">
         insert into user values(#{id},#{username},#{password},#{icon},#{address},#{email},#{telephone},#{grade},#{status},#{question},#{questions})
     </insert>
     <!--根据用户查询用户详情-->
     <select id="queryUserByuserId" resultMap="UserMap">
         select * from user where USER_ID = #{userId}
+    </select>
+    <!--根据用户id删除用户信息（逻辑删除）-->
+    <update id="deleteUserByUserId">
+        UPDATE USER set USER_STATUS=0 where USER_ID=#{userId}
+    </update>
+    <!--查询用户列表-->
+    <select id="queryUserList" resultMap="UserMap">
+        select * from user
     </select>
 </mapper>

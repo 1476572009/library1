@@ -1,5 +1,7 @@
 package org.lanqiao.taru.library.api;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Param;
 import org.lanqiao.taru.library.model.Book;
 import org.lanqiao.taru.library.model.User;
@@ -35,6 +37,7 @@ public class UserApi {
         }
         return jsonResult;
     }
+//    修改用户信息
     @RequestMapping("/api/user/insert")
     public JsonResult Updateall(@Param("id") String id,
                                 @Param("username") String username,
@@ -115,6 +118,50 @@ public class UserApi {
             }
         }catch(Exception e){
             jsonResult = new JsonResult("500","查询失败",e.getMessage());
+        }
+        return jsonResult;
+    }
+
+//    根据用户id删除用户信息
+    @RequestMapping("/api/user/deleteUserByUserId")
+    public JsonResult deleteUserByUserId(String userId){
+        JsonResult jsonResult = null;
+        try{
+            if (userId != null){
+                int i=impl.deleteUserByUserId(userId);
+                if(i>0){
+                    jsonResult = new JsonResult("200","删除成功",i);
+                }else{
+                    jsonResult = new JsonResult("404","删除失败，未找到该用户",null);
+                }
+
+            }else{
+                jsonResult = new JsonResult("404","查询失败，未传入参数！",null);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            jsonResult = new JsonResult("500","删除异常",e.getMessage());
+        }
+        return jsonResult;
+    }
+//    查询用户列表信息
+    @RequestMapping("/api/user/queryUserList")
+    public JsonResult queryUserList(int pageSize,int pageNum){
+        JsonResult jsonResult = null;
+        try{
+                PageHelper.startPage(pageSize,pageNum);
+                List<User> users=impl.queryUserList();
+                PageInfo<User> userPageInfo=new PageInfo<User>(users);
+                if(users!=null){
+                    jsonResult = new JsonResult("200","查询用户成功",users);
+                }else{
+                    jsonResult = new JsonResult("404","查询用户失败，暂无用户",null);
+                }
+
+
+        }catch(Exception e){
+            e.printStackTrace();
+            jsonResult = new JsonResult("500","查询用户异常",e.getMessage());
         }
         return jsonResult;
     }
