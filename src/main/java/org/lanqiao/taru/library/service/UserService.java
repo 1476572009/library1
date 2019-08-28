@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface UserService {
     public User Login(String tele, String password);
+//    修改用户信息
     public int updateAll(String id, String username, String password, String icon, String address, String email, String telephone, String grade, String status);
     public int updateGra(String id);
     public User selectAl(String id);
@@ -19,4 +20,8 @@ public interface UserService {
     public int userRegiste(String id, String username, String password, String icon, String address, String email, String telephone, String grade, String status, String question, String questions);
     //查询用户详情根据用户Id
     public User queryByUserId(String userId);
+    //    根据用户id删除用户信息
+    public int deleteUserByUserId(String userId);
+    //    查询用户列表
+    public List<User> queryUserList();
 }

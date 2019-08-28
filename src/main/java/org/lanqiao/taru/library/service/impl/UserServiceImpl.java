@@ -73,4 +73,14 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    //    根据用户id删除用户信息
+    @Override
+    public int deleteUserByUserId(String userId){
+        return userDao.deleteUserByUserId(userId);
+    }
+    //    查询用户列表
+    @Override
+    public List<User> queryUserList(){
+        return userDao.queryUserList();
+    }
 }
