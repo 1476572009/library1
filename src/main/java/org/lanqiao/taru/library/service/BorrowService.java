@@ -9,5 +9,5 @@ public interface BorrowService {
     public int insert(Borrow borrow);
     public List query(Borrow borrow);
     public int queryBookByUidandBookId(String userId,String bookId);
-
+    public List<Borrow> queryBorrowBookByuid(String userId);
 }
