@@ -9,6 +9,7 @@ import org.lanqiao.taru.library.service.BookService;
 import org.lanqiao.taru.library.util.IdUtil;
 import org.lanqiao.taru.library.vo.ArticleVo;
 import org.lanqiao.taru.library.vo.JsonResult;
+import org.lanqiao.taru.library.vo.OrderBookVo;
 import org.lanqiao.taru.library.vo.ReviewVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -247,11 +248,11 @@ public class BookApi {
     public JsonResult queryOrderByOrderId(String orderId) {
         JsonResult jsonResult = null;
         try {
-            Order order=bookService.queryOrderByOrderId(orderId);
+            OrderBookVo order=bookService.queryOrderByOrderId(orderId);
             if(order!=null){
                 jsonResult = new JsonResult("200", "查询订单成功", order);
             }else{
-                jsonResult = new JsonResult("404", "查询订单失败，该订单已被删除", order);
+                jsonResult = new JsonResult("404", "查询订单失败，该订单已被删除", null);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -261,7 +262,7 @@ public class BookApi {
     }
 
     //    查询订单列表（带分页）
-    @RequestMapping("/api.order/queryOrderList")
+    @RequestMapping("/api/order/queryOrderList")
     @ResponseBody
     public JsonResult queryOrderList(int pageNum,int pageSize) {
         JsonResult jsonResult = null;
@@ -270,13 +271,37 @@ public class BookApi {
             List<Order> orders=bookService.queryOrderList();
             PageInfo<Order> page = new PageInfo<Order>(orders);
             if(orders.size()>0){
-                jsonResult = new JsonResult("200", "查询订单列表成功", orders);
+                jsonResult = new JsonResult("200", "查询订单列表成功", page);
             }else{
                 jsonResult = new JsonResult("404", "查询订单列表失败，该订单已被删除", orders);
             }
         } catch (Exception e) {
             e.printStackTrace();
             jsonResult = new JsonResult("500", "查询订单列表异常", e.getMessage());
+        }
+        return jsonResult;
+    }
+    @RequestMapping("/api/order/delAll")
+    public JsonResult delAll(String orderId){
+        JsonResult jsonResult = null;
+        String [] orderids = null;
+        if (orderId!=null && orderId != "") {
+            if (orderId.indexOf(",") != -1) {
+                orderids = orderId.split(",");
+            } else {
+                orderids = new String[]{orderId};
+            }
+            try{
+                int i = bookService.delAll(orderids);
+               jsonResult =new JsonResult("200","删除成功！",i);
+            }catch (Exception e){
+                e.getMessage();
+                jsonResult =new JsonResult("500","删除失败！",null);
+            }
+
+        }
+        else {
+            jsonResult = new JsonResult("404", "未传递参数！", null);
         }
         return jsonResult;
     }

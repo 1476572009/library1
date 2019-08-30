@@ -173,18 +173,41 @@
             <result property="borrowStatus" column="BORROW_STATUS" jdbcType="VARCHAR"/>
         </collection>
     </resultMap>
+    <resultMap id="OrderDetailMap" type="org.lanqiao.taru.library.vo.OrderBookVo">
+            <id property="orderId" column="ORDER_ID" jdbcType="VARCHAR"/>
+        <collection property="book" ofType="org.lanqiao.taru.library.model.Book">
+            <result property="bookPicture" column="BOOK_PICTURE" jdbcType="VARCHAR" ></result>
+            <result property="bookCode" column="BOOK_CODE" jdbcType="VARCHAR" ></result>
+            <result property="bookName" column="BOOK_NAME" jdbcType="VARCHAR"></result>
+            <result property="bookAuthor" column="BOOK_AUTHOR" jdbcType="VARCHAR"></result>
+            <result property="bookPrice" column="BOOK_PRICE" jdbcType="VARCHAR"></result>
+        </collection>
+    </resultMap>
     <!--    根据订单id删除订单-->
     <update id="deleteOrderByOrderId">
         UPDATE orders set ORDER_STATUS=0 where order_id=#{orderId}
     </update>
     <!--    根据订单id查询订单详情-->
-    <!--    TODO-->
-    <select id="queryOrderByOrderId" resultMap="OrderMap">
-    select * FROM orders where ORDER_ID=#{orderId}
+    <select id="queryOrderByOrderId" resultMap="OrderDetailMap">
+        select * from books as a
+          left join borrow as b
+          on a.BOOK_ID = b.BORROW_BOOK_ID
+            left join orders as o
+              on b.BORROW_ORDER_ID = o.ORDER_ID
+        where o.ORDER_ID = #{orderId}
     </select>
     <!--    查询所有订单（带分页）-->
     <select id="queryOrderList" resultMap="OrderMap">
     select * from orders
     </select>
+    <!--批量删除-->
+    <update id="delAll">
+        update orders
+          set ORDER_STATUS = '0'
+            where ORDER_ID in
+        <foreach item="item"  collection="array"  open="(" separator="," close=")" >
+            #{item}
+        </foreach>
+    </update>
 
 </mapper>

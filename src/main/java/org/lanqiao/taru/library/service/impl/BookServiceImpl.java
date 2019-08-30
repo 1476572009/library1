@@ -6,6 +6,7 @@ import org.lanqiao.taru.library.model.Order;
 import org.lanqiao.taru.library.model.Review;
 import org.lanqiao.taru.library.service.BookService;
 import org.lanqiao.taru.library.vo.ArticleVo;
+import org.lanqiao.taru.library.vo.OrderBookVo;
 import org.lanqiao.taru.library.vo.ReviewVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,7 +70,7 @@ public class BookServiceImpl implements BookService {
     }
     //    根据订单查询订单详情
     @Override
-    public Order queryOrderByOrderId(String orderId) {
+    public OrderBookVo queryOrderByOrderId(String orderId) {
         return bookDaoImpl.queryOrderByOrderId(orderId);
     }
 
@@ -77,6 +78,12 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Order> queryOrderList() {
         return bookDaoImpl.queryOrderList();
+    }
+    //  批量删除
+    @Override
+    public int delAll(String[] orders) {
+
+        return bookDaoImpl.delAll(orders);
     }
 
 }

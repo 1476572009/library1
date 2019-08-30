@@ -6,6 +6,7 @@ import org.lanqiao.taru.library.model.Book;
 import org.lanqiao.taru.library.model.Order;
 import org.lanqiao.taru.library.model.Review;
 import org.lanqiao.taru.library.vo.ArticleVo;
+import org.lanqiao.taru.library.vo.OrderBookVo;
 import org.lanqiao.taru.library.vo.ReviewVo;
 
 import java.util.List;
@@ -52,7 +53,9 @@ public interface BookDao {
     //    根据id删除订单
     public int deleteOrderByOrderId(String orderId);
     //    根据id查询订单
-    public Order queryOrderByOrderId(String orderId);
+    public OrderBookVo queryOrderByOrderId(String orderId);
     //    查询订单列表
     public List<Order> queryOrderList();
+    //批量删除订单
+    public int delAll(String[] orders);
 }
