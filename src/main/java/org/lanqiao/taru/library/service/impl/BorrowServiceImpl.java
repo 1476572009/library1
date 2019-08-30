@@ -28,4 +28,10 @@ public class BorrowServiceImpl implements BorrowService {
         return bd.queryBookByUidandBookId(userId,bookId);
     }
 
+    //根据用户Id查询用户在借图书
+    @Override
+    public List<Borrow> queryBorrowBookByuid(String userId) {
+        return bd.selectBorrowBookByuid(userId);
+    }
+
 }

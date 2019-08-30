@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -81,6 +82,23 @@ public class BorrowApi {
 
 
 
+    //根据用户Id查询在借图书列表
+    @RequestMapping("/borrowBookbyUid")
+    public JsonResult queryBorrowbookByUid(String userId){
+        JsonResult jsonResult = null;
+        if(userId != null){
+            try{
+                List<Borrow> list = new ArrayList<Borrow>();
+                list = bs.queryBorrowBookByuid(userId);
+                jsonResult = new JsonResult("200","查询成功！",list);
+            }catch (Exception e){
+                jsonResult = new JsonResult("500","查询错误",e.getMessage());
+            }
+        }else{
+            jsonResult = new JsonResult("404","参数为空！",null);
+        }
+        return jsonResult;
+    }
 
 
 }

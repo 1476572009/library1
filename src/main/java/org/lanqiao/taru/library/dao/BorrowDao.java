@@ -11,4 +11,5 @@ public interface BorrowDao {
     public int insert(Borrow borrow);
     public List query(Borrow borrow);
     public int queryBookByUidandBookId(@Param("userId") String userId, @Param("bookId")String bookId);
+    public List<Borrow> selectBorrowBookByuid(String userId);
 }
